@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Atanke</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="Traductor">Traductor</string>
+    <string name="Lecturas">Lecturas</string>
+    <string name="Aprende">Aprende</string>
+</resources>
