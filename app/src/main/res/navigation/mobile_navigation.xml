@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_traductor">
+
+    <fragment
+        android:id="@+id/navigation_diccionario"
+        android:name="com.example.atanke.ui.diccionario.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/diccionario_fragment" />
+
+    <fragment
+        android:id="@+id/navigation_lectura"
+        android:name="com.example.atanke.ui.lectura.DashboardFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/lectura_fragment" />
+
+    <fragment
+        android:id="@+id/navigation_traductor"
+        android:name="com.example.atanke.ui.traductor.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/traductor_fragment" />
+</navigation>

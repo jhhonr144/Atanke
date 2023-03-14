@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Atanke</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="diccionario">Diccionario</string>
+    <string name="lectura">Lectura</string>
+    <string name="traductor">Traductor</string>
+    <string name="practica">Practica</string>
+    <string name="perfil">Perfil</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="RecordarContrasena">Recordar Contraseña</string>
+    <string name="usuario">Usuario</string>
+    <string name="Contrasena">Contraseña</string>
+    <string name="iniciarSesion">Iniciar Sesión</string>
+    <string name="siAunNoTienes">Si aun no tiene cuenta</string>
+    <string name="registreseAqui">REGISTRESE AQUI</string>
+    <string name="logo">logo</string>
+    <string name="Espanol">Español</string>
+    <string name="kankuamo">Kankuamo</string>
+    <string name="ingresarTexto">Ingresar texto...</string>
+    <string name="traduccion">Traduccion...</string>
+    <string name="cambiarIdioma">Cambiar Idioma</string>
+</resources>
