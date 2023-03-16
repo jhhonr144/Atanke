@@ -22,23 +22,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+
+
 import com.example.atanke.R;
 import com.example.atanke.databinding.TraductorFragmentBinding;
 import com.example.atanke.traducirpalabras.client.TraducirPalabraClient;
-import com.example.atanke.traducirpalabras.models.TraducirPalabraRequest;
+
 import com.example.atanke.traducirpalabras.models.TraducirPalabraResponse;
 import com.example.atanke.traducirpalabras.services.TraducirPalabraService;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -104,8 +98,11 @@ public class NotificationsFragment extends Fragment {
                 if (endIndex == -1) {
                     endIndex = text.length();
                 }
-                String selectedWord = text.substring(startIndex, endIndex);
-                Toast.makeText(getContext(), "Has tocado la palabra '" + selectedWord + "'", Toast.LENGTH_SHORT).show();
+                if (startIndex <= endIndex) {
+                    String selectedWord = text.substring(startIndex, endIndex);
+                    Toast.makeText(getContext(), "Has tocado la palabra '" + selectedWord + "'", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
