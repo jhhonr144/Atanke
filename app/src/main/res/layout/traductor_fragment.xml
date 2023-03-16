@@ -24,7 +24,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btnIdioma1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -41,7 +41,7 @@
                 tools:ignore="ImageContrastCheck" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/btnIdioma2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -49,7 +49,7 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/editTraducir"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints=""
@@ -59,14 +59,13 @@
             android:minHeight="150sp"
             tools:ignore="TextContrastCheck" />
 
-        <EditText
-            android:id="@+id/editTextTextPersonName3"
+        <TextView
+            android:id="@+id/editTraduccion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/traduccion"
             android:importantForAutofill="no"
-            android:inputType="textPersonName"
             android:minHeight="150sp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
