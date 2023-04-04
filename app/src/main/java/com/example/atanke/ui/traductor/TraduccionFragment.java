@@ -2,11 +2,13 @@ package com.example.atanke.ui.traductor;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,7 +20,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 
 
 import com.example.atanke.R;
@@ -36,13 +37,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NotificationsFragment extends Fragment {
+public class TraduccionFragment extends Fragment {
 
     private TraductorFragmentBinding binding;
     private TextView editTraduccion;
     private EditText editTraducir;
     private TraducirPalabraService traducirPalabraService;
     MotionEvent event;
+    private boolean isFirstTap = false;
+    private final Handler handler = new Handler();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.traductor_fragment, container, false);
@@ -54,7 +57,7 @@ public class NotificationsFragment extends Fragment {
         editTraduccion = requireView().findViewById(R.id.editTraduccion);
         editTraducir = requireView().findViewById(R.id.editTraducir);
 
-
+        //traduccion de palabras a medida que va escribiendo el usuario
         editTraducir.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -74,11 +77,19 @@ public class NotificationsFragment extends Fragment {
 
         editTraduccion.setOnTouchListener((v, event) -> {
             // Guardar el evento en la variable event
-            NotificationsFragment.this.event = event;
+            TraduccionFragment.this.event = event;
             return false;
         });
 
-        // Agrega un listener de clics al TextView para saber que palabra selecciono
+
+        final Runnable tapTimeoutRunnable = new Runnable() {
+            @Override
+            public void run() {
+                isFirstTap = false;
+            }
+        };
+
+        // Agrega un listener de clics DOS VECES al TextView para saber que palabra selecciono
         editTraduccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +97,6 @@ public class NotificationsFragment extends Fragment {
                 editTraduccion.getLocationOnScreen(pos);
                 float x = event.getRawX() - pos[0];
                 float y = event.getRawY() - pos[1];
-                ;
                 int offset = editTraduccion.getOffsetForPosition(x, y);
                 String text = editTraduccion.getText().toString();
                 int startIndex = text.lastIndexOf(" ", offset) + 1;
@@ -96,14 +106,24 @@ public class NotificationsFragment extends Fragment {
                 }
                 if (startIndex <= endIndex) {
                     String selectedWord = text.substring(startIndex, endIndex);
-                    Toast.makeText(getContext(), "Has tocado la palabra '" + selectedWord + "'", Toast.LENGTH_SHORT).show();
+                    if (!selectedWord.trim().isEmpty()) {
+                        if (!isFirstTap) {
+                            isFirstTap = true;
+                            handler.postDelayed(tapTimeoutRunnable, 500);
+                        } else {
+                            isFirstTap = false;
+                            OptionsBottomSheet bottomSheet = new OptionsBottomSheet();
+                            bottomSheet.show(requireActivity().getSupportFragmentManager(), "OptionsBottomSheet");
+                        }
+                    }
                 }
-
             }
         });
 
+
         super.onViewCreated(view, savedInstanceState);
     }
+
 
     private void getTraduccionPalabra(String data) {
         traducirPalabraService.getTraducir(data).enqueue(new Callback<TraducirPalabraResponse>() {
@@ -130,7 +150,7 @@ public class NotificationsFragment extends Fragment {
             String palabraSinCaracteres = palabra.replaceAll("<|>", "");
             int inicio = matcher.start();
             int fin = matcher.end();
-            spannableString.setSpan(new ForegroundColorSpan(Color.RED), inicio, fin, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannableString.setSpan(new ForegroundColorSpan(Color.GREEN), inicio, fin, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             Editable editable = Editable.Factory.getInstance().newEditable(spannableString);
             editable.replace(inicio, fin, palabraSinCaracteres);
             spannableString = new SpannableString(editable);

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".ui.traductor.NotificationsFragment">
+    tools:context=".ui.traductor.TraduccionFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -57,15 +57,19 @@
             android:hint="@string/ingresarTexto"
             android:inputType="textPersonName"
             android:minHeight="150sp"
+            android:textStyle="bold"
             tools:ignore="TextContrastCheck" />
 
         <TextView
             android:id="@+id/editTraduccion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
             android:ems="10"
             android:hint="@string/traduccion"
             android:importantForAutofill="no"
-            android:minHeight="150sp" />
+            android:minHeight="150sp"
+            android:textSize="18sp"
+            android:textStyle="bold" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,4 +20,25 @@
     <string name="ingresarTexto">Ingresar texto...</string>
     <string name="traduccion">Traduccion...</string>
     <string name="cambiarIdioma">Cambiar Idioma</string>
+    <string name="sugerir_traduccion">Sugerir traduccion</string>
+    <string name="agregar_traduccion">Agregar traduccion</string>
+    <string name="traductorr">Traductor</string>
+    <string name="seleccionar_idioma">Seleccionar idioma</string>
+    <string name="traduccionn">Traduccion</string>
+    <string name="palabra">Palabra</string>
+    <string name="pronunciaci_n">Pronunciación</string>
+    <string name="nuestra_comunidad">Sé parte de nuestra comunidad de traductores</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="nombre_usuario">Nombre usuario</string>
+    <string name="correo_electronico">Correo electronico</string>
+    <string name="contrase_a">Contraseña</string>
+    <string name="registrarse">Registrarse</string>
 </resources>
