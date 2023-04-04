@@ -1,26 +1,15 @@
 package com.example.atanke.ui.traductor;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 
 import com.example.atanke.MainActivity;
 import com.example.atanke.R;
-import com.example.atanke.ui.login.Login;
 import com.example.atanke.ui.sugerirtraduccion.SugerirTraduccion;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-
-import java.util.Objects;
 
 public class OptionsBottomSheet extends BottomSheetDialogFragment {
 
@@ -56,8 +45,7 @@ public class OptionsBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void pasar(){
-            Intent intent = new Intent(getContext(), SugerirTraduccion.class);
-            startActivity(intent);
+           MainActivity.irAClase(getContext(), SugerirTraduccion.class);
     }
 
 

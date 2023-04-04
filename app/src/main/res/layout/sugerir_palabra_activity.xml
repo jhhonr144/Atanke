@@ -71,7 +71,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnSugerir"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/agregar_traduccion" />
