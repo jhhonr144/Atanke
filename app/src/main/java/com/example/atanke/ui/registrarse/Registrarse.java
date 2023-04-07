@@ -8,13 +8,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.atanke.MainActivity;
 import com.example.atanke.R;
 import com.example.atanke.general.utils.DialogBuilderDinamico;
 import com.example.atanke.general.utils.ValidarEditTextVacios;
@@ -129,7 +127,7 @@ public class Registrarse extends AppCompatActivity {
                     detenerAlertaCargando();
                   DialogBuilderDinamico.alertaAdvertencia(context);
                 }
-                Log.e("", String.valueOf(response.body()));
+
                 if (response.body().getId().equals(BigDecimal.valueOf(-1))){
                     detenerAlertaCargando();
                     if(response.body().getErrores() != null){
@@ -149,7 +147,7 @@ public class Registrarse extends AppCompatActivity {
                             ,botones,true,new DialogBuilderDinamico.BotonClickListener(){
                                 @Override
                                 public void onPositiveButtonClicked() {
-                                        MainActivity.irAClase(context, MainActivity.class);
+                                        finish();
                                 }
 
                                 @Override

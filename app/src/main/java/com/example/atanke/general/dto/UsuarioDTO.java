@@ -22,7 +22,7 @@ public class UsuarioDTO {
    @PrimaryKey(autoGenerate = false)
    private int id;
    private String token;
-
+   private String image_path;
    @Ignore
    public UsuarioDTO() {}
 }
