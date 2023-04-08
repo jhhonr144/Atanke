@@ -10,7 +10,7 @@ import androidx.room.RoomDatabase;
 import com.example.atanke.general.dto.UsuarioDTO;
 import com.example.atanke.registrarusuario.Dao.UsuarioDao;
 
-@Database(entities = {UsuarioDTO.class}, version = 1)
+@Database(entities = {UsuarioDTO.class}, version = 2)
 public abstract class ConfigDataBase extends RoomDatabase {
     public abstract UsuarioDao usuarioDao();
 
