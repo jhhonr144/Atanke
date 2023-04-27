@@ -2,7 +2,7 @@ package com.example.atanke.sugerirtraduccion.client;
 
 import static com.example.atanke.config.ConfigClient.Url;
 
-import com.example.atanke.traducirpalabras.services.TraducirPalabraService;
+import com.example.atanke.sugerirtraduccion.services.SugerirTraduccionService;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -16,7 +16,7 @@ public class SugerirTraduccionClient {
     public static final String URL_BASE = Url;
     private static Retrofit retrofit;
 
-    public static TraducirPalabraService getApiService(){
+    public static SugerirTraduccionService getApiService(){
         if(retrofit == null){
             retrofit = new  Retrofit.Builder()
                     .baseUrl(URL_BASE)
@@ -24,7 +24,7 @@ public class SugerirTraduccionClient {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-        return retrofit.create(TraducirPalabraService.class);
+        return retrofit.create(SugerirTraduccionService.class);
     }
 
 }

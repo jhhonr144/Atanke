@@ -15,6 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.atanke.R;
 import com.example.atanke.general.utils.DialogBuilderDinamico;
 import com.example.atanke.general.utils.ValidarEditTextVacios;
+import com.example.atanke.sugerirtraduccion.client.SugerirTraduccionClient;
+import com.example.atanke.sugerirtraduccion.models.SugerirTraduccionRequest;
+import com.example.atanke.sugerirtraduccion.services.SugerirTraduccionService;
 import com.example.atanke.ui.login.Login;
 import com.example.atanke.ui.registrarse.Registrarse;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -27,6 +30,7 @@ public class SugerirTraduccion extends AppCompatActivity {
     Spinner  codIdioma;
     EditText palabra,traduccion,pronunciacion;
     Button sugerir;
+    private SugerirTraduccionService service;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +53,13 @@ public class SugerirTraduccion extends AppCompatActivity {
             editTexts.add(traduccion);
             editTexts.add(pronunciacion);
             if(ValidarEditTextVacios.validarEditTextNoVacio(editTexts)){
+               sugerirTraduccion(SugerirTraduccionRequest.builder()
+                       .palabra(palabra.getText().toString())
+                       .traduccion(traduccion.getText().toString())
+                       .pronunciacion(pronunciacion.getText().toString())
+                       .build());
+                
+                service = SugerirTraduccionClient.getApiService();
 
             }else{
                 DialogBuilderDinamico.camposVacias(this);
@@ -59,6 +70,9 @@ public class SugerirTraduccion extends AppCompatActivity {
             mensaje(this);
                 }
         );
+    }
+
+    private void sugerirTraduccion(SugerirTraduccionRequest build) {
     }
 
     public void mensaje(Context context){
