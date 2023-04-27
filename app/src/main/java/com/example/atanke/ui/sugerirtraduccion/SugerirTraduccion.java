@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,9 +13,14 @@ import android.widget.Spinner;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.atanke.R;
+import com.example.atanke.general.utils.DialogBuilderDinamico;
+import com.example.atanke.general.utils.ValidarEditTextVacios;
 import com.example.atanke.ui.login.Login;
 import com.example.atanke.ui.registrarse.Registrarse;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SugerirTraduccion extends AppCompatActivity {
     AutoCompleteTextView idiomas;
@@ -32,8 +38,24 @@ public class SugerirTraduccion extends AppCompatActivity {
         traduccion = findViewById(R.id.traduccion);
         pronunciacion = findViewById(R.id.pronunciacion);
 
+        String[] idiomas = {"Kankuamo","Español",};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, idiomas);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        codIdioma.setAdapter(adapter);
 
         sugerir.setOnClickListener(view -> {
+            List<EditText> editTexts = new ArrayList<>();
+            editTexts.add(palabra);
+            editTexts.add(traduccion);
+            editTexts.add(pronunciacion);
+            if(ValidarEditTextVacios.validarEditTextNoVacio(editTexts)){
+
+            }else{
+                DialogBuilderDinamico.camposVacias(this);
+            }
+
+
+
             mensaje(this);
                 }
         );
