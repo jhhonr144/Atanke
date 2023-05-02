@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_traductor"
-        android:name="com.example.atanke.ui.traductor.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:name="com.example.atanke.ui.traductor.TraduccionFragment"
+        android:label="@string/traductorr"
         tools:layout="@layout/traductor_fragment" />
 </navigation>

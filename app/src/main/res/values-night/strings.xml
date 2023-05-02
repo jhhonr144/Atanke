@@ -8,4 +8,14 @@
     <string name="Espanol">Español</string>
     <string name="kankuamo">Kankuamo</string>
     <string name="traduccion">Traduccion...</string>
+    <string name="sugerir_traduccion">Sugerir traduccion</string>
+    <string name="agregar_traduccion">Agregar traduccion</string>
+    <string name="traductorr">Traductor</string>
+    <string name="palabra">Palabra</string>
+    <string name="pronunciaci_n">Pronunciación</string>
+    <string name="nuestra_comunidad">Sé parte de nuestra comunidad de traductores</string>
+    <string name="nombre_usuario">Nombre usuario</string>
+    <string name="correo_electronico">Correo electronico</string>
+    <string name="contrase_a">Contraseña</string>
+    <string name="registrarse">Registrarse</string>
 </resources>
