@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 import com.example.atanke.config.ConfigDataBase;
 import com.example.atanke.general.dto.UsuarioDTO;
 import com.example.atanke.iniciarsesion.models.IniciarSesionResponse;
-import com.example.atanke.registrarusuario.Dao.UsuarioDao;
+import com.example.atanke.general.Dao.UsuarioDao;
 import com.example.atanke.ui.login.Login;
 
 import java.lang.ref.WeakReference;

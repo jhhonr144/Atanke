@@ -1,8 +1,12 @@
 package com.example.atanke.general.dto;
 
+import androidx.room.Dao;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.Query;
+
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,4 +29,11 @@ public class UsuarioDTO {
    private String image_path;
    @Ignore
    public UsuarioDTO() {}
+
+   @Dao
+   public interface UsuarioDao {
+      @Query("SELECT * FROM usuarios")
+      List<UsuarioDTO> getAllUsuarios();
+   }
+
 }

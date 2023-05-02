@@ -1,5 +1,7 @@
 package com.example.atanke.ui.traductor;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,7 +10,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
-import android.view.GestureDetector;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,14 +23,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-
 import com.example.atanke.R;
 import com.example.atanke.databinding.TraductorFragmentBinding;
 import com.example.atanke.traducirpalabras.client.TraducirPalabraClient;
-
 import com.example.atanke.traducirpalabras.models.TraducirPalabraResponse;
 import com.example.atanke.traducirpalabras.services.TraducirPalabraService;
-
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -111,6 +110,12 @@ public class TraduccionFragment extends Fragment {
                             isFirstTap = true;
                             handler.postDelayed(tapTimeoutRunnable, 500);
                         } else {
+                            SharedPreferences preferences =  requireActivity().getSharedPreferences("seleccionPalabra", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString("miPalabra", selectedWord);
+                            editor.apply();
+
+                            Log.e("",selectedWord);
                             isFirstTap = false;
                             OptionsBottomSheet bottomSheet = new OptionsBottomSheet();
                             bottomSheet.show(requireActivity().getSupportFragmentManager(), "OptionsBottomSheet");

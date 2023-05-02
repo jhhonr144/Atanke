@@ -1,4 +1,4 @@
-package com.example.atanke.registrarusuario.Dao;
+package com.example.atanke.general.Dao;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
