@@ -8,7 +8,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.atanke.general.dto.UsuarioDTO;
-import com.example.atanke.registrarusuario.Dao.UsuarioDao;
+import com.example.atanke.general.Dao.UsuarioDao;
 
 @Database(entities = {UsuarioDTO.class}, version = 2)
 public abstract class ConfigDataBase extends RoomDatabase {

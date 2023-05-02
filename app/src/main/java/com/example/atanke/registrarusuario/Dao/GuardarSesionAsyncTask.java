@@ -3,6 +3,7 @@ package com.example.atanke.registrarusuario.Dao;
 import android.os.AsyncTask;
 
 import com.example.atanke.config.ConfigDataBase;
+import com.example.atanke.general.Dao.UsuarioDao;
 import com.example.atanke.general.dto.UsuarioDTO;
 import com.example.atanke.registrarusuario.models.RegistrarUsuarioResponse;
 import com.example.atanke.ui.registrarse.Registrarse;

@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SugerirTraduccionRequest {
     private int codIdioma;
+    private int codIdioma2;
     private String palabra;
     private String traduccion;
     private String pronunciacion;
