@@ -3,7 +3,6 @@
 
     <item
         android:id="@+id/navigation_diccionario"
-        android:icon="@drawable/ic_baseline_library_books_24"
         android:title="@string/diccionario" />
 
     <item
