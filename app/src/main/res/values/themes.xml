@@ -12,5 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/montserrat_light</item>
+        <item name="android:textColorHint">#373535</item>
     </style>
 </resources>
