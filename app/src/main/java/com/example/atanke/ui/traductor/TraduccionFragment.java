@@ -1,21 +1,26 @@
 package com.example.atanke.ui.traductor;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.speech.tts.TextToSpeech;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
-import android.text.style.ForegroundColorSpan;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +50,8 @@ public class TraduccionFragment extends Fragment {
     MotionEvent event;
     private boolean isFirstTap = false;
     private final Handler handler = new Handler();
+    private Button btnIdioma1, btnIdioma2;
+    TextToSpeech textToSpeech;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.traductor_fragment, container, false);
@@ -55,6 +62,25 @@ public class TraduccionFragment extends Fragment {
 
         editTraduccion = requireView().findViewById(R.id.editTraduccion);
         editTraducir = requireView().findViewById(R.id.editTraducir);
+        ImageButton imageButton = requireView().findViewById(R.id.imageButton);
+        btnIdioma1 = requireView().findViewById(R.id.btnIdioma1);
+        btnIdioma2 = requireView().findViewById(R.id.btnIdioma2);
+        ImageView btnCopy = requireView().findViewById(R.id.copy);
+
+        btnCopy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager clipboardManager = (ClipboardManager) requireActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clipData = ClipData.newPlainText("text", editTraducir.getText().toString());
+                clipboardManager.setPrimaryClip(clipData);
+                Toast.makeText(requireActivity().getApplicationContext(), "Traduccion copiada en portapapeles", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        imageButton.setOnClickListener(view1 -> {
+            btnIdioma1.setText(btnIdioma1.getText().toString().equals("Español")?"Kankuamo":"Español");
+            btnIdioma2.setText(btnIdioma2.getText().toString().equals("Español")?"Kankuamo":"Español");
+        });
 
         //traduccion de palabras a medida que va escribiendo el usuario
         editTraducir.addTextChangedListener(new TextWatcher() {
@@ -131,7 +157,8 @@ public class TraduccionFragment extends Fragment {
 
 
     private void getTraduccionPalabra(String data) {
-        traducirPalabraService.getTraducir(data).enqueue(new Callback<TraducirPalabraResponse>() {
+        String fk_idioma = btnIdioma1.getText().toString().equals("Español")?"1":"2";
+        traducirPalabraService.getTraducir(data,fk_idioma).enqueue(new Callback<TraducirPalabraResponse>() {
             @Override
             public void onResponse(@NonNull Call<TraducirPalabraResponse> call, Response<TraducirPalabraResponse> response) {
                 editTraduccion.setText(response.body().getTraduccion());
@@ -155,7 +182,7 @@ public class TraduccionFragment extends Fragment {
             String palabraSinCaracteres = palabra.replaceAll("<|>", "");
             int inicio = matcher.start();
             int fin = matcher.end();
-            spannableString.setSpan(new ForegroundColorSpan(Color.GREEN), inicio, fin, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannableString.setSpan(new UnderlineSpan(), inicio, fin, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             Editable editable = Editable.Factory.getInstance().newEditable(spannableString);
             editable.replace(inicio, fin, palabraSinCaracteres);
             spannableString = new SpannableString(editable);
