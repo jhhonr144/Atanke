@@ -36,7 +36,7 @@
             android:id="@+id/edtCorreo"
             style="@style/DPEditText.Normal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:autofillHints=""
             android:ems="10"
             android:hint="@string/usuario"
@@ -48,7 +48,6 @@
             android:id="@+id/edtContrasena"
             style="@style/DPEditText.Normal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_spacing_large"
             android:autofillHints=""
             android:hint="@string/Contrasena"
@@ -71,27 +70,23 @@
             android:textColorLink="#5BEBA6" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/llDoctorLogin"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginStart="@dimen/dp_spacing_standard_new"
+            android:layout_marginEnd="@dimen/dp_spacing_standard_new"
+            android:layout_marginTop="@dimen/dp_spacing_middle">
 
             <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="end"
+                style="@style/DPSubHeading"
                 android:text="@string/siAunNoTienes" />
 
             <TextView
                 android:id="@+id/txtRegistrarse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="end"
-                android:paddingRight="30sp"
-                android:text="@string/registreseAqui"
-                android:textColor="@color/teal_700" />
+                style="@style/DPSubHeading"
+                android:layout_marginStart="@dimen/dp_spacing_control_half"
+                android:textColor="@color/teal_700"
+                android:text="@string/registreseAqui" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
