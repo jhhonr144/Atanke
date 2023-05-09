@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.Atanke" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#5BECA7</item>
+        <item name="colorPrimary">#41CB89</item>
         <item name="colorPrimaryVariant">#32865D</item>
         <item name="colorOnPrimary">#145737</item>
         <!-- Secondary brand color. -->
