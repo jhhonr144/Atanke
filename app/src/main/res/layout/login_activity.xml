@@ -44,20 +44,26 @@
             android:hint="@string/Contrasena"
             android:inputType="textPassword"
             android:minHeight="48dp"
+            android:layout_marginTop="@dimen/dp_spacing_large"
+            style="@style/DPEditText.Normal"
             />
 
         <CheckBox
             android:id="@+id/checkBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/RecordarContrasena" />
+            android:text="@string/RecordarContrasena"
+            android:visibility="gone"
+            />
 
         <Button
             android:id="@+id/btnIniciar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/iniciarSesion"
-            android:textColorLink="#5BEBA6" />
+            android:textColorLink="#5BEBA6"
+            android:layout_marginTop="@dimen/dp_spacing_large"
+            style="@style/DPButtonStyle"/>
 
         <LinearLayout
             android:layout_width="match_parent"

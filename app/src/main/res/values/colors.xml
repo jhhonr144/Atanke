@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="dp_view_color">#DADADA</color>
     <color name="dp_app_background">#FAFAFA</color>
+    <color name="colorPrimary">#5BECA7</color>
 </resources>
