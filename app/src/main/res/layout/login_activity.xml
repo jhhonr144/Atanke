@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/dp_app_background"
     tools:context=".ui.login.Login">
 
     <LinearLayout
@@ -31,7 +32,8 @@
             android:hint="@string/usuario"
             android:inputType="textPersonName"
             android:minHeight="48dp"
-            tools:ignore="TextContrastCheck" />
+            tools:ignore="TextContrastCheck"
+            style="@style/DPEditText.Normal"/>
 
         <EditText
             android:id="@+id/edtContrasena"
@@ -41,7 +43,8 @@
             android:ems="10"
             android:hint="@string/Contrasena"
             android:inputType="textPassword"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            />
 
         <CheckBox
             android:id="@+id/checkBox"

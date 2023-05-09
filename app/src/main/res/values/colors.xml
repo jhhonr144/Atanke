@@ -7,4 +7,6 @@
     <color name="teal_700">#145737</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="dp_view_color">#DADADA</color>
+    <color name="dp_app_background">#FAFAFA</color>
 </resources>
