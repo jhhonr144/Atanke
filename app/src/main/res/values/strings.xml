@@ -13,7 +13,7 @@
     <string name="Contrasena">Contraseña</string>
     <string name="iniciarSesion">Iniciar Sesión</string>
     <string name="siAunNoTienes">Si aun no tiene cuenta</string>
-    <string name="registreseAqui">REGISTRESE AQUI</string>
+    <string name="registreseAqui">Registrate aqui</string>
     <string name="logo">logo</string>
     <string name="Espanol">Español</string>
     <string name="kankuamo">Kankuamo</string>
@@ -41,4 +41,5 @@
     <string name="correo_electronico">Correo electronico</string>
     <string name="contrase_a">Contraseña</string>
     <string name="registrarse">Registrarse</string>
+    <string name="dp_already_have_an_account">¿Ya tienes una cuenta?</string>
 </resources>
