@@ -20,10 +20,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
+
             <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            ></ImageView>
+                android:layout_width="200px"
+                android:layout_height="150px"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                app:srcCompat="@drawable/ic_baseline_person_24"></ImageView>
 
                 <TextView
                     android:id="@+id/txt_perfil_nombre"
@@ -39,19 +42,6 @@
                     android:layout_weight="1"
                     android:text="Correo:" />
 
-            <TextView
-                    android:id="@+id/txt_perfil_rol"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Rol" />
-
-            <TextView
-                android:id="@+id/txt_perfil_estado"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="estado" />
 
 
             <TextView
@@ -61,6 +51,21 @@
                 android:layout_weight="1"
                 android:text="creado" />
 
+
+
+            <TextView
+                android:id="@+id/txt_perfil_rol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Rol" />
+
+            <TextView
+                android:id="@+id/txt_perfil_estado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="estado" />
 
         </LinearLayout>
     </ScrollView>
