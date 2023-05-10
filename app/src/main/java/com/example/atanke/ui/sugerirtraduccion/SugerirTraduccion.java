@@ -60,7 +60,7 @@ public class SugerirTraduccion extends AppCompatActivity {
 
 
         String[] idiomas = {"Español","Kankuamo"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, idiomas);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, idiomas);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         codIdioma.setAdapter(adapter);
 

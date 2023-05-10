@@ -9,9 +9,10 @@
 
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:animation="@anim/splash_screen_animation"
         android:src="@drawable/atanke" />
+
 </RelativeLayout>

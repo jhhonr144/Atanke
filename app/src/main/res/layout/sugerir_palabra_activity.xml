@@ -34,35 +34,38 @@
 
         <Spinner
             android:id="@+id/codIdioma"
+            style="@style/DPEditText.Normal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            />
 
         <EditText
             android:id="@+id/palabra"
+            style="@style/DPEditText.Normal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/palabra"
             android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/traduccion"
+            style="@style/DPEditText.Normal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/traduccionn"
             android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/pronunciacion"
+            style="@style/DPEditText.Normal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/pronunciaci_n"
             android:inputType="textPersonName" />
 
         <Button
             android:id="@+id/btnSugerir"
+            style="@style/DPButtonStyle"
+            android:layout_marginTop="@dimen/dp_spacing_large"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/agregar_traduccion" />
