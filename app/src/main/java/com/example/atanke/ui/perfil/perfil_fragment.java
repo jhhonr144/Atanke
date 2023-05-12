@@ -4,23 +4,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.atanke.config.ConfigDataBase;
 import com.example.atanke.databinding.PerfilFragmentBinding;
 import com.example.atanke.general.Dao.UsuarioDao;
 import com.example.atanke.general.dto.UsuarioDTO;
-import com.example.atanke.perfilusuario.client.PerfilUserClient;
-import com.example.atanke.perfilusuario.models.PerfilUsuarioResponse;
 import com.example.atanke.perfilusuario.services.PerfilUsuarioService;
 import com.example.atanke.sugerirtraduccion.Dao.GetAllUsuariosTask;
 import com.example.atanke.ui.login.Login;
@@ -30,10 +24,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class perfil_fragment extends Fragment {
     private PerfilFragmentBinding binding;
     private PerfilUsuarioService perfilService;
@@ -42,8 +32,7 @@ public class perfil_fragment extends Fragment {
     private TextView txtNombre;
     private TextView txtcorreo;
     private TextView txtcreado;
-    private TextView txtestado;
-    private TextView txtrol;
+
     public perfil_fragment() {
     }
 
@@ -62,8 +51,8 @@ public class perfil_fragment extends Fragment {
         txtNombre = binding.txtPerfilNombre;
         txtcorreo = binding.txtPerfilCorreo;
         txtcreado = binding.txtPerfilCreado;
-        txtestado = binding.txtPerfilEstado;
-        txtrol = binding.txtPerfilRol;
+
+
         try {
             infoUser();
         } catch (ExecutionException e) {
