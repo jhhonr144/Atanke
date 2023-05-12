@@ -10,9 +10,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.atanke.MainActivity;
 import com.example.atanke.R;
 import com.example.atanke.general.utils.DialogBuilderDinamico;
 import com.example.atanke.general.utils.ValidarEditTextVacios;
@@ -21,6 +23,7 @@ import com.example.atanke.registrarusuario.client.RegistrarUsuarioClient;
 import com.example.atanke.registrarusuario.models.RegistrarUsuarioRequest;
 import com.example.atanke.registrarusuario.models.RegistrarUsuarioResponse;
 import com.example.atanke.registrarusuario.services.RegistrarUsuarioService;
+import com.example.atanke.ui.login.Login;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -37,6 +40,8 @@ public class Registrarse extends AppCompatActivity {
     private RegistrarUsuarioService registrarUsuarioService;
     Context context;
 
+    TextView tvSignIn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +51,11 @@ public class Registrarse extends AppCompatActivity {
         correo = findViewById(R.id.editCorreo);
         contrasena = findViewById(R.id.editContrasena);
         registrarse = findViewById(R.id.btnRegistrarse);
+        tvSignIn = findViewById(R.id.tvSignIn);
 
-
+        tvSignIn.setOnClickListener(view -> {
+            MainActivity.irAClase(this, Login.class);
+        });
         //validamos correo
         correo.addTextChangedListener(new TextWatcher() {
             @Override
