@@ -17,9 +17,12 @@
 
         <TextView
             android:id="@+id/textView3"
-            android:layout_marginTop="@dimen/dp_font_size_medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="@dimen/dp_font_size_medium"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center"
             android:text="@string/nuestra_comunidad"
             android:textSize="18sp"
@@ -30,7 +33,8 @@
             android:layout_width="match_parent"
             android:layout_height="79dp"
             android:gravity="center"
-            android:text="Sabemos que tienes un gran conocimiento en idiomas y queremos aprovecharlo para mejorar. ¿Nos ayudas a agregar o modificar una palabra o su traducción? \n ¡Sería fantástico contar contigo!" />
+            android:text="Sabemos que tienes un gran conocimiento en idiomas y queremos aprovecharlo para mejorar. ¿Nos ayudas a agregar o modificar una palabra o su traducción? \n ¡Sería fantástico contar contigo!"
+            android:visibility="gone" />
 
 
         <Spinner
