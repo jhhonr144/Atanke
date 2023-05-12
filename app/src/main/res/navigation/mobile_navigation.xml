@@ -22,4 +22,10 @@
         android:name="com.example.atanke.ui.traductor.TraduccionFragment"
         android:label="@string/traductorr"
         tools:layout="@layout/traductor_fragment" />
+
+    <fragment
+        android:id="@+id/navigation_perfil"
+        android:name="com.example.atanke.ui.perfil.perfil_fragment"
+        android:label="@string/perfil"
+        tools:layout="@layout/perfil_fragment" />
 </navigation>

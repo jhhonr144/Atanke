@@ -179,7 +179,6 @@ public class SugerirTraduccion extends AppCompatActivity {
                 .setPositiveButton("Iniciar sesión", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
                         Intent intent = new Intent(context, Login.class);
                         context.startActivity(intent);
 
