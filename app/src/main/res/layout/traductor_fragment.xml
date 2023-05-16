@@ -49,13 +49,19 @@
                 android:text="@string/kankuamo" />
         </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bordefondoverde"
+        android:gravity="right"
+        android:orientation="vertical"
+        android:layout_marginTop="31dp">
         <EditText
             android:id="@+id/editTraducir"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="31dp"
+            android:background="@android:color/transparent"
             android:autofillHints=""
-            android:background="@drawable/bordeverde"
             android:ems="10"
             android:fontFamily="@font/montserrat_light"
             android:gravity="start|top"
@@ -70,7 +76,14 @@
             android:textColorHint="#373535"
             android:textStyle="bold"
             tools:ignore="TextContrastCheck" />
-
+        <ImageView
+            android:id="@+id/btnVoz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10sp"
+            android:layout_marginBottom="10sp"
+            android:src="@drawable/ic_baseline_volume_up_24" />
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
