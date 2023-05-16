@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
@@ -34,6 +35,7 @@ import com.example.atanke.traducirpalabras.client.TraducirPalabraClient;
 import com.example.atanke.traducirpalabras.models.TraducirPalabraResponse;
 import com.example.atanke.traducirpalabras.services.TraducirPalabraService;
 
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,7 +43,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TraduccionFragment extends Fragment {
+public class TraduccionFragment extends Fragment implements  TextToSpeech.OnInitListener{
 
     private TraductorFragmentBinding binding;
     private TextView editTraduccion;
@@ -66,6 +68,16 @@ public class TraduccionFragment extends Fragment {
         btnIdioma1 = requireView().findViewById(R.id.btnIdioma1);
         btnIdioma2 = requireView().findViewById(R.id.btnIdioma2);
         ImageView btnCopy = requireView().findViewById(R.id.copy);
+        ImageView btnVoz = requireView().findViewById(R.id.btnVoz);
+
+        btnVoz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                convertirTextoAVoz();
+            }
+        });
+
+        textToSpeech = new TextToSpeech(getActivity(), this);
 
         btnCopy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,5 +208,48 @@ public class TraduccionFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onInit(int i) {
+        if (i == TextToSpeech.SUCCESS) {
+            Locale language = Locale.getDefault();
+            int result = textToSpeech.setLanguage(language);
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("TTS", "Lenguaje no soportado");
+            }
+        } else {
+            Log.e("TTS", "Voz no disponible");
+        }
+    }
+
+    public void convertirTextoAVoz() {
+        Toast.makeText(requireActivity().getApplicationContext(), "Reproduciendo...", Toast.LENGTH_SHORT).show();
+        String texto = editTraducir.getText().toString();
+
+        if (textToSpeech != null && !textToSpeech.isSpeaking()) {
+            // Parar el TextToSpeech previo
+            textToSpeech.stop();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                // Utilizar una forma alternativa para dispositivos con API nivel >= 21
+                Bundle params = new Bundle();
+                params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "1.0f");
+                textToSpeech.speak(texto, TextToSpeech.QUEUE_FLUSH, params, "1.0f");
+            } else {
+                // Utilizar la forma original para dispositivos con API nivel < 21
+                textToSpeech.speak(texto, TextToSpeech.QUEUE_FLUSH, null);
+            }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        // Liberar recursos de TextToSpeech
+        if (textToSpeech != null) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
+        super.onDestroy();
     }
 }
