@@ -1,13 +1,18 @@
 package com.example.atanke.ui.traductor;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
 import android.text.Editable;
 import android.text.Spannable;
@@ -25,16 +30,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.atanke.R;
 import com.example.atanke.databinding.TraductorFragmentBinding;
 import com.example.atanke.traducirpalabras.client.TraducirPalabraClient;
 import com.example.atanke.traducirpalabras.models.TraducirPalabraResponse;
 import com.example.atanke.traducirpalabras.services.TraducirPalabraService;
 
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -55,12 +65,16 @@ public class TraduccionFragment extends Fragment implements  TextToSpeech.OnInit
     private TextView btnIdioma1, btnIdioma2, textView1,textView2;
     TextToSpeech textToSpeech;
 
+    private final int REQUEST_RECORD_PERMISSION = 100;
+
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.traductor_fragment, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
 
         editTraduccion = requireView().findViewById(R.id.editTraduccion);
         editTraducir = requireView().findViewById(R.id.editTraducir);
@@ -71,8 +85,24 @@ public class TraduccionFragment extends Fragment implements  TextToSpeech.OnInit
         ImageView btnVoz = requireView().findViewById(R.id.btnVoz);
         ImageView imageView1 = requireView().findViewById(R.id.imageView2);
         ImageView imageView2 = requireView().findViewById(R.id.imageView3);
+        ImageView btnclear = requireView().findViewById(R.id.btnclear);
+        ImageView share = requireView().findViewById(R.id.share);
+        LottieAnimationView recordingbubble = requireView().findViewById(R.id.recordingbubble);
+
         textView1 = requireView().findViewById(R.id.textView1);
         textView2 = requireView().findViewById(R.id.textView2);
+
+        btnclear.setOnClickListener(view1 -> {
+            editTraducir.setText("");
+        }  );
+
+        share.setOnClickListener(view1 -> {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, editTraduccion.getText().toString());
+
+            startActivity(Intent.createChooser(intent, "Compartir traducción"));
+        }  );
 
         btnVoz.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,6 +218,34 @@ public class TraduccionFragment extends Fragment implements  TextToSpeech.OnInit
             }
         });
 
+        ActivityResultLauncher<Intent> speechRecognitionLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == Activity.RESULT_OK) {
+                Intent data = result.getData();
+                if (data != null) {
+                    ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    // Procesa los resultados del reconocimiento de voz
+                    if (matches != null && !matches.isEmpty()) {
+                        String recognizedText = matches.get(0);
+                        // Haz algo con el texto reconocido, como mostrarlo en un EditText
+                        editTraducir.setText(recognizedText);
+                    }
+                }
+            }
+        });
+        recordingbubble.setOnClickListener(view1 -> {
+            // Verifica si el reconocimiento de voz está disponible
+            if (SpeechRecognizer.isRecognitionAvailable(requireActivity())) {
+
+                ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_RECORD_PERMISSION);
+
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+                speechRecognitionLauncher.launch(intent);
+            } else {
+                Toast.makeText(getActivity(), "Reconocimiento de voz no disponible", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         super.onViewCreated(view, savedInstanceState);
     }
