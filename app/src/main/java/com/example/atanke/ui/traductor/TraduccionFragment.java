@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -52,7 +52,7 @@ public class TraduccionFragment extends Fragment implements  TextToSpeech.OnInit
     MotionEvent event;
     private boolean isFirstTap = false;
     private final Handler handler = new Handler();
-    private Button btnIdioma1, btnIdioma2;
+    private TextView btnIdioma1, btnIdioma2, textView1,textView2;
     TextToSpeech textToSpeech;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,6 +69,10 @@ public class TraduccionFragment extends Fragment implements  TextToSpeech.OnInit
         btnIdioma2 = requireView().findViewById(R.id.btnIdioma2);
         ImageView btnCopy = requireView().findViewById(R.id.copy);
         ImageView btnVoz = requireView().findViewById(R.id.btnVoz);
+        ImageView imageView1 = requireView().findViewById(R.id.imageView2);
+        ImageView imageView2 = requireView().findViewById(R.id.imageView3);
+        textView1 = requireView().findViewById(R.id.textView1);
+        textView2 = requireView().findViewById(R.id.textView2);
 
         btnVoz.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,9 +93,30 @@ public class TraduccionFragment extends Fragment implements  TextToSpeech.OnInit
             }
         });
 
+        textView1.setText(btnIdioma1.getText().toString());
+        textView2.setText(btnIdioma2.getText().toString());
+
         imageButton.setOnClickListener(view1 -> {
             btnIdioma1.setText(btnIdioma1.getText().toString().equals("Español")?"Kankuamo":"Español");
             btnIdioma2.setText(btnIdioma2.getText().toString().equals("Español")?"Kankuamo":"Español");
+            textView1.setText(btnIdioma1.getText().toString());
+            textView2.setText(btnIdioma2.getText().toString());
+
+            if(btnIdioma1.getText().toString().equals("Español")){
+                Drawable drawable = getResources().getDrawable(R.drawable.banderasp);
+                Drawable drawable2 = getResources().getDrawable(R.drawable.atanbande);
+// Cambia la imagen del ImageView utilizando setImageDrawable()
+                imageView1.setImageDrawable(drawable);
+                imageView2.setImageDrawable(drawable2);
+            }else{
+                Drawable drawable = getResources().getDrawable(R.drawable.banderasp);
+                Drawable drawable2 = getResources().getDrawable(R.drawable.atanbande);
+// Cambia la imagen del ImageView utilizando setImageDrawable()
+                imageView2.setImageDrawable(drawable);
+                imageView1.setImageDrawable(drawable2);
+            }
+
+
         });
 
         //traduccion de palabras a medida que va escribiendo el usuario
