@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_lectura"
-        android:name="com.example.atanke.ui.lectura.DashboardFragment"
+        android:name="com.example.atanke.ui.lectura.LecturaFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/lectura_fragment" />
 

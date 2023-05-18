@@ -1,4 +1,4 @@
-package com.example.atanke.diccionario.models;
+package com.example.atanke.lectura.models;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +23,7 @@ public class ItemLecturaAdapter extends RecyclerView.Adapter<ItemLecturaAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.diccionario_item_fragment, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.lectura_item_fragment, parent, false);
         return new ViewHolder(itemView);
     }
 

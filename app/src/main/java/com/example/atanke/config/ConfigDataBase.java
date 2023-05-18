@@ -12,7 +12,7 @@ import com.example.atanke.general.dto.ConfigDTO;
 import com.example.atanke.general.dto.UsuarioDTO;
 import com.example.atanke.general.Dao.UsuarioDao;
 
-@Database(entities = {UsuarioDTO.class, ConfigDTO.class}, version = 2)
+@Database(entities = {UsuarioDTO.class, ConfigDTO.class}, version = 3)
 public abstract class ConfigDataBase extends RoomDatabase {
     public abstract UsuarioDao usuarioDao();
     public abstract ConfigDao configDao();
@@ -25,6 +25,7 @@ public abstract class ConfigDataBase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     ConfigDataBase.class, "database")
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }

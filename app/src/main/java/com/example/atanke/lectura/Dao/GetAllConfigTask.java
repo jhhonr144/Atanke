@@ -1,4 +1,4 @@
-package com.example.atanke.diccionario.Dao;
+package com.example.atanke.lectura.Dao;
 
 import android.os.AsyncTask;
 

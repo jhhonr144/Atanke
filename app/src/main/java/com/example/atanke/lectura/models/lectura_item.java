@@ -1,21 +1,20 @@
-package com.example.atanke.diccionario.models;
+package com.example.atanke.lectura.models;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.atanke.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link diccionario_item#newInstance} factory method to
+ * Use the {@link lectura_item#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class diccionario_item extends Fragment {
+public class lectura_item extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +25,7 @@ public class diccionario_item extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public diccionario_item() {
+    public lectura_item() {
         // Required empty public constructor
     }
 
@@ -39,8 +38,8 @@ public class diccionario_item extends Fragment {
      * @return A new instance of fragment diccionario_item.
      */
     // TODO: Rename and change types and number of parameters
-    public static diccionario_item newInstance(String param1, String param2) {
-        diccionario_item fragment = new diccionario_item();
+    public static lectura_item newInstance(String param1, String param2) {
+        lectura_item fragment = new lectura_item();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,6 +60,6 @@ public class diccionario_item extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.diccionario_item_fragment, container, false);
+        return inflater.inflate(R.layout.lectura_item_fragment, container, false);
     }
 }

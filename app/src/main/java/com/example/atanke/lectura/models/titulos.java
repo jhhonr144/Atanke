@@ -1,4 +1,4 @@
-package com.example.atanke.diccionario.models;
+package com.example.atanke.lectura.models;
 
 import java.util.ArrayList;
 import java.util.List;
