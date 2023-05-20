@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".lectura.models.lectura_item">
+    android:layout_marginBottom="2dp"
+    tools:context=".lectura.models.intems.lectura_item">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -36,7 +37,18 @@
             android:layout_height="wrap_content"
             android:paddingStart="3dp"
             android:paddingLeft="3dp"
+            android:layout_marginBottom="8dp"
             android:text="breve descripcion" />
+
+        <TextView
+            android:id="@+id/txt_dic_itm_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom|end"
+            android:paddingLeft="3dp"
+            android:text="Publicado" />
+
+
     </LinearLayout>
 
 </LinearLayout>

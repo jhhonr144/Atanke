@@ -16,4 +16,7 @@ public interface ConfigDao {
 
     @Query("SELECT * FROM config")
     List<ConfigDTO> getAllconfig();
+
+    @Query("DELETE FROM config WHERE nombre=:nombre")
+    void deleteByNombre(String nombre);
 }

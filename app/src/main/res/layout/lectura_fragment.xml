@@ -46,6 +46,24 @@
             android:text="Mitos"
             android:textColor="@color/black" />
 
+        <Button
+            android:id="@+id/btn_vd_tradiciones"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/bordefondoverde"
+            android:text="Tradiciones"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btn_vd_todos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/bordefondoverde"
+            android:text="Todos"
+            android:textColor="@color/black" />
+
     </LinearLayout>
 
     <ScrollView

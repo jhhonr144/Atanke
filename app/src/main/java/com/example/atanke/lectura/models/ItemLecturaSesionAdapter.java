@@ -14,42 +14,32 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.atanke.R;
+import com.example.atanke.general.dto.api.sesiones.BDLecturaSesionDTO;
 import com.example.atanke.ui.lectura.lectura_sessiones;
 import com.squareup.picasso.Picasso;
 
-import com.example.atanke.R;
-
 import java.util.List;
 
-public class ItemLecturaAdapter extends RecyclerView.Adapter<ItemLecturaAdapter.ViewHolder> {
-    private List<titulos> datos;
-    public ItemLecturaAdapter(List<titulos> listaTodo) {
+public class ItemLecturaSesionAdapter extends RecyclerView.Adapter<ItemLecturaSesionAdapter.ViewHolder> {
+    private List<BDLecturaSesionDTO>  datos;
+    public ItemLecturaSesionAdapter(List<BDLecturaSesionDTO>  listaTodo) {
         datos=listaTodo;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.lectura_item_fragment, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_lectura_sesion, parent, false);
         return new ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         // Asignar valores a las vistas del elemento
-        if(datos.get(position).foto==null)
-        holder.imageView.setImageResource(R.drawable.ic_baseline_auto_stories_24);
-        else{
-            String fotoUrl =Url +  "storage/img/Cuento/"+datos.get(position).foto;
-            Picasso.get().load(fotoUrl)
-                    .placeholder(R.drawable.ic_baseline_auto_stories_24)
-                    .error(R.drawable.ic_baseline_close_24)
-                    .into(holder.imageView);
-        }
-        holder.textView1.setText(datos.get(position).titulo);
-        holder.textView2.setText(datos.get(position).descripcion);
-        holder.textView3.setText(datos.get(position).publico);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.textView1.setText(datos.get(position).getNombre());
+        holder.textView2.setText(datos.get(position).getContenidos());
+       /* holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Context context = holder.itemView.getContext();
@@ -58,7 +48,7 @@ public class ItemLecturaAdapter extends RecyclerView.Adapter<ItemLecturaAdapter.
                 intent.putExtra("Id", position);
                 context.startActivity(intent);
             }
-        });
+        });*/
     }
 
     @Override
@@ -67,17 +57,13 @@ public class ItemLecturaAdapter extends RecyclerView.Adapter<ItemLecturaAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView imageView;
         public TextView textView1;
         public TextView textView2;
-        public TextView textView3;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.dic_itm_img);
-            textView1 = itemView.findViewById(R.id.txt_dic_itm_titulo);
-            textView2 = itemView.findViewById(R.id.txt_dic_itm_descrip);
-            textView3 = itemView.findViewById(R.id.txt_dic_itm_user);
+            textView1 = itemView.findViewById(R.id.txt_ls_titulo);
+            textView2 = itemView.findViewById(R.id.txt_ls_contenido);
         }
     }
 }

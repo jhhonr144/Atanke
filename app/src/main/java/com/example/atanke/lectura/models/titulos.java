@@ -6,19 +6,23 @@ public class titulos {
         public String foto;
         public String titulo;
         public String descripcion;
-        public String categoria;
+    public int categoria;
+    public int id;
+        public String publico;
         private List<titulos> listaCuento;
         private List<titulos> listaLeyenda;
         private List<titulos> listaMito;
+        private List<titulos> listaTradiciones;
         private List<titulos> todo;
 
         public titulos() {
             this.listaCuento = new ArrayList<>();
             this.listaLeyenda = new ArrayList<>();
             this.listaMito = new ArrayList<>();
+            this.listaTradiciones = new ArrayList<>();
             this.todo = new ArrayList<>();
         }
-        public  titulos( String foto, String titulo, String descripcion, String categoria){
+        public  titulos( String foto, String titulo, String descripcion, int categoria){
             if(foto!=null){
                 this.foto=foto;
             }
@@ -43,6 +47,10 @@ public class titulos {
             listaMito.add(mito);
             todo.add(mito);
         }
+        public  void agregarTradiciones(titulos tradiciones){
+            listaTradiciones.add(tradiciones);
+            todo.add(tradiciones);
+        }
 
         // Métodos para obtener las listas
         public List<titulos> getListaCuento() {
@@ -53,6 +61,9 @@ public class titulos {
             return listaLeyenda;
         }
 
+    public List<titulos> getListaTradiciones() {
+        return listaTradiciones;
+    }
     public List<titulos> getListaMito() {
         return listaMito;
     }
