@@ -1,37 +1,26 @@
 package com.example.atanke.ui.lectura;
 
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Bundle;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.atanke.R;
 import com.example.atanke.config.ConfigDataBase;
-import com.example.atanke.general.Dao.BDLecturaDao;
 import com.example.atanke.general.Dao.BDLecturaSesionDao;
-import com.example.atanke.general.Dao.ConfigDao;
-import com.example.atanke.general.dto.ConfigDTO;
-import com.example.atanke.general.dto.api.lecturas.BDLecturaDTO;
-import com.example.atanke.general.dto.api.sesiones.BDLecturaContenidoDTO;
 import com.example.atanke.general.dto.api.sesiones.BDLecturaSesionDTO;
-import com.example.atanke.general.utils.ValidarFechas;
-import com.example.atanke.lectura.Dao.GetAllConfigTask;
 import com.example.atanke.lectura.Dao.GetLecturaSesionFk_lecturaTask;
 import com.example.atanke.lectura.client.LecturaSesionClient;
-import com.example.atanke.lectura.client.LecturaTituloClient;
-import com.example.atanke.lectura.models.ItemLecturaAdapter;
 import com.example.atanke.lectura.models.ItemLecturaSesionAdapter;
 import com.example.atanke.lectura.models.LecturaSesionResponse;
-import com.example.atanke.lectura.models.LecturaTitulosResponse;
 import com.example.atanke.lectura.services.LecturaSesionService;
 
 import java.util.List;
@@ -79,6 +68,7 @@ public class lectura_sessiones extends AppCompatActivity {
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void CargarConfig() throws ExecutionException, InterruptedException {
+        db = ConfigDataBase.getInstance(this);
         BDLecturaSesionDao lsesiondao= db.BDLecturaSesionDao();
         GetLecturaSesionFk_lecturaTask task = new GetLecturaSesionFk_lecturaTask(lsesiondao,idTitulo);
         task.execute();
