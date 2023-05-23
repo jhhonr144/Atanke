@@ -262,7 +262,7 @@ public class TraduccionFragment extends Fragment implements  TextToSpeech.OnInit
 
             @Override
             public void onFailure(Call<TraducirPalabraResponse> call, Throwable t) {
-                Toast.makeText(getContext(), "No se puede traducir, verifica la conexion y vuelve a intentarlo", Toast.LENGTH_SHORT).show();
+                editTraduccion.setText(R.string.no_traduccion);
             }
         });
     }

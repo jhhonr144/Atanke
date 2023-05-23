@@ -46,5 +46,6 @@
     <string name="correo">Correo</string>
     <string name="fecha_creacion">Fecha Creación</string>
     <string name="estado">Estado</string>
+    <string name="no_traduccion">No se puede traducir, verifica la conexion y vuelve a intentarlo</string>
 
 </resources>
