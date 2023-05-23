@@ -17,4 +17,5 @@ public class ValidarFechas {
         LocalDate fechaHace7Dias = fechaActual.minusDays(7);
         return fecha.isBefore(fechaHace7Dias.atStartOfDay());
     }
+
 }

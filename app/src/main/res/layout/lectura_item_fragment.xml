@@ -13,10 +13,10 @@
         android:id="@+id/dic_itm_img"
         android:layout_width="120dp"
         android:layout_height="80dp"
-        android:layout_weight="1"
-        android:src="@drawable/ic_baseline_auto_stories_24"
         android:scaleType="fitStart"
-        android:adjustViewBounds="true" />
+        android:adjustViewBounds="true"
+        android:layout_weight="1"
+        android:src="@drawable/ic_baseline_auto_stories_24" />
 
     <LinearLayout
         android:layout_width="match_parent"

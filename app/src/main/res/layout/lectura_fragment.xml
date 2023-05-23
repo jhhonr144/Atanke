@@ -7,74 +7,83 @@
     tools:context=".ui.lectura.LecturaFragment">
 
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/btn_vd_cuento"
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/bordeverde"
-            android:text="Cuentos"
-            android:textColor="@color/dp_app_background" />
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn_vd_leyenda"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/bordefondoverde"
-            android:text="Leyendas"
-            android:textColor="@color/black" />
+            <Button
+                android:id="@+id/btn_vd_cuento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bordeverde"
+                android:text="Cuentos"
+                android:textColor="@color/dp_app_background" />
 
-        <Button
-            android:id="@+id/btn_vd_mitos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:background="@drawable/bordefondoverde"
-            android:text="Mitos"
-            android:textColor="@color/black" />
+            <Button
+                android:id="@+id/btn_vd_tradiciones"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bordefondoverde"
+                android:text="Tradiciones"
+                android:textColor="@color/black" />
 
-        <Button
-            android:id="@+id/btn_vd_tradiciones"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:background="@drawable/bordefondoverde"
-            android:text="Tradiciones"
-            android:textColor="@color/black" />
+            <Button
+                android:id="@+id/btn_vd_mitos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bordefondoverde"
+                android:text="Mitos"
+                android:textColor="@color/black" />
 
-        <Button
-            android:id="@+id/btn_vd_todos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:background="@drawable/bordefondoverde"
-            android:text="Todos"
-            android:textColor="@color/black" />
+            <Button
+                android:id="@+id/btn_vd_todos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bordefondoverde"
+                android:text="Todos"
+                android:textColor="@color/black" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btn_vd_leyenda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bordefondoverde"
+                android:text="Leyendas"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintBottom_toTopOf="@+id/liner_cantidad"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView">
 
         <LinearLayout
             android:layout_width="match_parent"

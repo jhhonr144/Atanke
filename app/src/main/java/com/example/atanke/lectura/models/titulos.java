@@ -6,9 +6,10 @@ public class titulos {
         public String foto;
         public String titulo;
         public String descripcion;
-    public int categoria;
-    public int id;
+        public int categoria;
+        public int id;
         public String publico;
+        public String fecha;
         private List<titulos> listaCuento;
         private List<titulos> listaLeyenda;
         private List<titulos> listaMito;

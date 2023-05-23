@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.atanke.R;
 import com.example.atanke.config.ConfigDataBase;
 import com.example.atanke.general.Dao.BDLecturaSesionDao;
+import com.example.atanke.general.dto.api.sesiones.BDLecturaContenidoDTO;
 import com.example.atanke.general.dto.api.sesiones.BDLecturaSesionDTO;
 import com.example.atanke.lectura.Dao.GetLecturaSesionFk_lecturaTask;
 import com.example.atanke.lectura.client.LecturaSesionClient;
@@ -45,6 +46,7 @@ public class lectura_sessiones extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lectura_sessiones);
         Intent intent = getIntent();
+        db = ConfigDataBase.getInstance(this);
         idTitulo= intent.getStringExtra("Titulo");
         if(idTitulo==null || idTitulo.equals("")){
              finish();
@@ -52,10 +54,11 @@ public class lectura_sessiones extends AppCompatActivity {
         }
         recicle=findViewById(R.id.recicle_session);
         titulo=findViewById(R.id.txt_s_titulo);
-        selecion=findViewById(R.id.txt_s_seleciono);
-        cantidad=findViewById(R.id.txt_s_cantida_sessiones);
+        titulo.setText(intent.getStringExtra("Nombre"));
         fecha=findViewById(R.id.txt_s_fechap);
-        autor=findViewById(R.id.txt_s_cantida_sessiones);
+        fecha.setText(intent.getStringExtra("Fecha"));
+        autor=findViewById(R.id.txt_s_autor);
+        autor.setText(intent.getStringExtra("Autor"));
         //$$mostrar un cargando mientra bisca la info
         try {
             CargarConfig();
@@ -68,7 +71,6 @@ public class lectura_sessiones extends AppCompatActivity {
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void CargarConfig() throws ExecutionException, InterruptedException {
-        db = ConfigDataBase.getInstance(this);
         BDLecturaSesionDao lsesiondao= db.BDLecturaSesionDao();
         GetLecturaSesionFk_lecturaTask task = new GetLecturaSesionFk_lecturaTask(lsesiondao,idTitulo);
         task.execute();
@@ -85,9 +87,7 @@ public class lectura_sessiones extends AppCompatActivity {
         //$$MOSTRARCARGANDO$$
         //no hay datos descargado hay qe consultar a la web
         lsServicio = LecturaSesionClient.getApiService();
-        lsServicio.getLecturaSesion(
-            "Bearer 89|LdCRhHUy2wpp5JCHAMpgLen3HNkKJOu1BsLz3iHU",
-            idTitulo)
+        lsServicio.getLecturaSesion(idTitulo)
             .enqueue(new Callback<LecturaSesionResponse>() {
                 @Override
                 public void onResponse(
@@ -100,6 +100,7 @@ public class lectura_sessiones extends AppCompatActivity {
                                 Toast.makeText(getBaseContext(), "Lecturas vacia, espere a que el admin publique informacion", Toast.LENGTH_SHORT).show();
                             else{
                                 guardarLecturasSesiones(response.body().getDatos());
+                                listSesiones=response.body().getDatos();
                                 cargarRecicle();
                             }
                         }
@@ -127,9 +128,9 @@ public class lectura_sessiones extends AppCompatActivity {
                 BDLecturaSesionDao.deleteByfk_lectura(fkLectura);
                 for (BDLecturaSesionDTO sesion : sesiones) {
                     BDLecturaSesionDao.insert(sesion);
-                    /*for(BDLecturaContenidoDTO contenido :sesion.getContenido_lecturas()){
+                    for(BDLecturaContenidoDTO contenido :sesion.getContenido_lecturas()){
                         BDLecturaSesionDao.insertc(contenido);
-                    }*/
+                    }
                 }
             }
             return null;

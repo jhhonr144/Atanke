@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.atanke.general.dto.api.lecturas.BDLecturaDTO;
+import com.example.atanke.general.dto.api.sesiones.BDLecturaSesionDTO;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public interface BDLecturaDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(BDLecturaDTO lecturaTitulo);
+
 
     @Query("SELECT * FROM lectura_titulo")
     List<BDLecturaDTO> getAllLectura_titulo();

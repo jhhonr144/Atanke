@@ -18,7 +18,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="end"
         android:orientation="horizontal">
 
@@ -26,6 +26,7 @@
             android:id="@+id/txt_s_fechap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
             android:layout_weight="0"
             android:gravity="bottom|end"
             android:text="12 / 12 / 1212 12 : 12" />
@@ -34,6 +35,8 @@
             android:id="@+id/txt_s_autor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="0"
             android:gravity="bottom|end"
             android:text="Autor Apalleido" />
@@ -46,25 +49,5 @@
         android:background="@drawable/bordeverde"
         android:paddingLeft="5dp"
         android:paddingRight="5dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/txt_s_seleciono"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Sin Selecion" />
-
-        <TextView
-            android:id="@+id/txt_s_cantida_sessiones"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="#" />
-    </LinearLayout>
 
 </LinearLayout>

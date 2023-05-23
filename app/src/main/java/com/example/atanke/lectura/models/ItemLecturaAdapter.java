@@ -55,7 +55,9 @@ public class ItemLecturaAdapter extends RecyclerView.Adapter<ItemLecturaAdapter.
                 Context context = holder.itemView.getContext();
                 Intent intent = new Intent(context, lectura_sessiones.class);
                 intent.putExtra("Titulo", datos.get(position).id+"");
-                intent.putExtra("Id", position);
+                intent.putExtra("Nombre", datos.get(position).titulo);
+                intent.putExtra("Autor", datos.get(position).publico);
+                intent.putExtra("Fecha", datos.get(position).fecha);
                 context.startActivity(intent);
             }
         });

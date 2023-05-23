@@ -207,43 +207,36 @@ private  TextView txtcantidadLecturas;
         lecturas =  task.get();
         for(BDLecturaDTO l : lecturas){
             titulos tt= new titulos();
+            tt.foto=esVacio(l.getPortada().getMultimedia());
+            tt.titulo=l.getNombre();
+            tt.descripcion=l.getDescripcion();
+            tt.categoria =l.getFk_tipo();
+            tt.publico =l.getUser().getName();
+            tt.id =l.getId();
+            try {
+                tt.fecha=l.getCreated_at().toString().split("T")[0];
+            }
+            catch (Exception e){
+                try {
+                    tt.fecha=l.getCreated_at().toString().split(" ")[0];
+                }
+                catch (Exception e1){
+                    tt.fecha="...";
+                }
+            }
             switch (l.getFk_tipo()){
                 case 1://cuentos
-                    tt.foto=esVacio(l.getPortada().getMultimedia());
-                    tt.titulo=l.getNombre();
-                    tt.descripcion=l.getDescripcion();
-                    tt.categoria =l.getFk_tipo();
-                    tt.publico =l.getUser().getName();
-                    tt.id =l.getId();
                     t.agregarCuento(tt);
                     break;
 
                 case 2://Leyenda
-                    tt.foto=esVacio(l.getPortada().getMultimedia());
-                    tt.titulo=l.getNombre();
-                    tt.descripcion=l.getDescripcion();
-                    tt.categoria =l.getFk_tipo();
-                    tt.publico =l.getUser().getName();
-                    tt.id =l.getId();
                     t.agregarLeyenda(tt);
                     break;
 
                 case 3://Mitos
-                    tt.foto=esVacio(l.getPortada().getMultimedia());
-                    tt.titulo=l.getNombre();
-                    tt.descripcion=l.getDescripcion();
-                    tt.categoria =l.getFk_tipo();
-                    tt.publico =l.getUser().getName();
-                    tt.id =l.getId();
                     tt.agregarMito(tt);
                     break;
                 case 4://tradiciones
-                    tt.foto=esVacio(l.getPortada().getMultimedia());
-                    tt.titulo=l.getNombre();
-                    tt.descripcion=l.getDescripcion();
-                    tt.categoria =l.getFk_tipo();
-                    tt.publico =l.getUser().getName();
-                    tt.id =l.getId();
                     tt.agregarTradiciones(tt);
                     break;
             }

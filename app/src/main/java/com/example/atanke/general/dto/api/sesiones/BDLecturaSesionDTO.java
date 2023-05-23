@@ -30,7 +30,7 @@ public class BDLecturaSesionDTO implements Serializable {
     private int fk_lectura;
     private String created_at;
     private String updated_at;
-    private int contenidos;
+    private int contenidos=0;
     @Ignore
     private List<BDLecturaContenidoDTO> contenido_lecturas;
 
