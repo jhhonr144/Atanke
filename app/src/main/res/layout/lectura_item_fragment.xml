@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="2dp"
+    tools:context=".lectura.models.intems.lectura_item">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ImageView
+        android:id="@+id/dic_itm_img"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:scaleType="fitStart"
+        android:adjustViewBounds="true"
+        android:layout_weight="1"
+        android:src="@drawable/ic_baseline_auto_stories_24" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_dic_itm_titulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Titulo" />
+
+        <TextView
+            android:id="@+id/txt_dic_itm_descrip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="3dp"
+            android:paddingLeft="3dp"
+            android:layout_marginBottom="8dp"
+            android:text="breve descripcion" />
+
+        <TextView
+            android:id="@+id/txt_dic_itm_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom|end"
+            android:paddingLeft="3dp"
+            android:text="Publicado" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

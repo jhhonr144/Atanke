@@ -26,7 +26,6 @@ import java.util.concurrent.ExecutionException;
 
 public class perfil_fragment extends Fragment {
     private PerfilFragmentBinding binding;
-    private PerfilUsuarioService perfilService;
     private List<UsuarioDTO> usuarios;
     private ConfigDataBase db;
     private TextView txtNombre;
