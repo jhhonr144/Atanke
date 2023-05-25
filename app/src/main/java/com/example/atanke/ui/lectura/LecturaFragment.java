@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.atanke.R;
 import com.example.atanke.config.ConfigDataBase;
 import com.example.atanke.databinding.LecturaFragmentBinding;
 import com.example.atanke.general.Dao.BDLecturaDao;
@@ -33,6 +31,7 @@ import com.example.atanke.lectura.models.ItemLecturaAdapter;
 import com.example.atanke.lectura.models.LecturaTitulosResponse;
 import com.example.atanke.lectura.models.titulos;
 import com.example.atanke.lectura.services.Lectura10Service;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -45,13 +44,12 @@ public class LecturaFragment extends Fragment {
 
     private LecturaFragmentBinding binding;
     private RecyclerView recicle;
-    private int  botonSelecionado=1;
-    private ItemLecturaAdapter itemsRecicle;
     private ConfigDataBase db;
-    private List<ConfigDTO> config;
-    private Lectura10Service SLectura;
     private titulos t ;
-private  TextView txtcantidadLecturas;
+
+    private final String[] tabTitles = {"Todos", "Cuentos", "Leyendas", "Mitos", "Traduciones"};
+
+    private  TextView txtcantidadLecturas;
     @RequiresApi(api = Build.VERSION_CODES.O)
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -60,58 +58,55 @@ private  TextView txtcantidadLecturas;
         db = ConfigDataBase.getInstance(getContext());
         t= new titulos();
         txtcantidadLecturas= binding.txtCantidadl;
+        TabLayout tabLayout = binding.tabLayout;
+
+        for (String title : tabTitles) {
+            TabLayout.Tab tab = tabLayout.newTab();
+            tab.setText(title);
+            tabLayout.addTab(tab);
+        }
+        TabLayout.Tab defaultTab = tabLayout.getTabAt(0); // Obtén el primer tab
+        if (defaultTab != null) {
+            defaultTab.select(); // Selecciona el tab
+        }
 
         recicle=binding.recicleP;
         try {
             CargarConfig();
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
-        Button button1 = binding.btnVdCuento;
-        Button button2 = binding.btnVdLeyenda;
-        Button button3 = binding.btnVdMitos;
-        Button button4 = binding.btnVdTradiciones;
-        Button button = binding.btnVdTodos;
+
         //$$? forzar actualizacion
         //llamas consultarLecturarTituloApi pero preguntale si te seguro antes
-        setupButtonListeners(button1, button2, button3, button4,button);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                cargarRecicle(position);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
         return root;
     }
-    private void setupButtonListeners(Button... buttons) {
-        for (Button button : buttons) {
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    switch (v.getId()) {
-                        case R.id.btn_vd_cuento:
-                            botonSelecionado = 1;
-                            break;
-                        case R.id.btn_vd_leyenda:
-                            botonSelecionado = 2;
-                            break;
-                        case R.id.btn_vd_mitos:
-                            botonSelecionado = 3;
-                            break;
-                        case R.id.btn_vd_tradiciones:
-                            botonSelecionado = 4;
-                            break;
-                        default:
-                            botonSelecionado=0;
-                            break;
-                    }
-                cargarRecicle();
-                }
-            });
-        }
-    }
+
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void CargarConfig() throws ExecutionException, InterruptedException {
         ConfigDao ConfigDao = db.configDao();
         GetAllConfigTask task = new GetAllConfigTask(ConfigDao);
         task.execute();
-        config = task.get();
+        List<ConfigDTO> config = task.get();
         boolean buscar=false;
         if(config.isEmpty()){
             buscar=true;
@@ -139,7 +134,7 @@ private  TextView txtcantidadLecturas;
 
         //$$MOSTRARCARGANDO$$
         //no hay datos descargado hay qe consultar a la web
-        SLectura = LecturaTituloClient.getApiService();
+        Lectura10Service SLectura = LecturaTituloClient.getApiService();
         SLectura.getLecturaTitulos (
                         "Bearer 89|LdCRhHUy2wpp5JCHAMpgLen3HNkKJOu1BsLz3iHU",
                         "1000")
@@ -158,9 +153,7 @@ private  TextView txtcantidadLecturas;
                                 guardarConfig("LecturaTitulos",response.body().getDatos_len()+"",getContext());
                                 try {
                                     cargarDatos();
-                                } catch (ExecutionException e) {
-                                    throw new RuntimeException(e);
-                                } catch (InterruptedException e) {
+                                } catch (ExecutionException | InterruptedException e) {
                                     throw new RuntimeException(e);
                                 }
                             }
@@ -241,34 +234,35 @@ private  TextView txtcantidadLecturas;
                     break;
             }
         }
-        cargarRecicle();
+        cargarRecicle(0);
     }
 
-    private void cargarRecicle() {
+    private void cargarRecicle(int botonSelecionado) {
         LinearLayoutManager layautManayer = new LinearLayoutManager(getContext());
         recicle.setLayoutManager(layautManayer);
         int cantidad=0;
+        ItemLecturaAdapter itemsRecicle;
         switch (botonSelecionado){
             case 1://cuentos
-                itemsRecicle= new ItemLecturaAdapter(t.getListaCuento());
+                itemsRecicle = new ItemLecturaAdapter(t.getListaCuento());
                 cantidad=t.getListaCuento().size() ;
                 break;
 
             case 2://Leyenda
-                itemsRecicle= new ItemLecturaAdapter(t.getListaLeyenda());
+                itemsRecicle = new ItemLecturaAdapter(t.getListaLeyenda());
                 cantidad=t.getListaLeyenda().size() ;
                 break;
 
             case 3://Mitos
-                itemsRecicle= new ItemLecturaAdapter(t.getListaMito());
+                itemsRecicle = new ItemLecturaAdapter(t.getListaMito());
                 cantidad=t.getListaMito().size( );
                 break;
             case 4://tradiciones
-                itemsRecicle= new ItemLecturaAdapter(t.getListaTradiciones());
+                itemsRecicle = new ItemLecturaAdapter(t.getListaTradiciones());
                 cantidad=t.getListaTradiciones().size( );
                 break;
             default://Todos
-                itemsRecicle= new ItemLecturaAdapter(t.getListaTodo());
+                itemsRecicle = new ItemLecturaAdapter(t.getListaTodo());
                 cantidad=t.getListaTodo().size();
                 break;
         }
