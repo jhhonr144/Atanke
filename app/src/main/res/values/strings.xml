@@ -47,5 +47,8 @@
     <string name="fecha_creacion">Fecha Creación</string>
     <string name="estado">Estado</string>
     <string name="no_traduccion">No se puede traducir, verifica la conexion y vuelve a intentarlo</string>
+    <string name="todos">Todos</string>
+    <string name="cuentos">Cuentos</string>
+    <string name="tradiciones">Tradiciones</string>
 
 </resources>
