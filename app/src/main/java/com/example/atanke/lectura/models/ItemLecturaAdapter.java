@@ -1,7 +1,5 @@
 package com.example.atanke.lectura.models;
 
-import static com.example.atanke.config.ConfigClient.Url;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -14,10 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.atanke.ui.lectura.lectura_sessiones;
-import com.squareup.picasso.Picasso;
-
 import com.example.atanke.R;
+import com.example.atanke.ui.lectura.lectura_sessiones;
 
 import java.util.List;
 
@@ -37,15 +33,16 @@ public class ItemLecturaAdapter extends RecyclerView.Adapter<ItemLecturaAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         // Asignar valores a las vistas del elemento
-        if(datos.get(position).foto==null)
-        holder.imageView.setImageResource(R.drawable.ic_baseline_auto_stories_24);
+         /*  if(datos.get(position).foto==null)
+       // holder.imageView.setImageResource(R.drawable.ic_baseline_auto_stories_24);
         else{
-            String fotoUrl =Url +  "storage/img/Cuento/"+datos.get(position).foto;
+         String fotoUrl =Url +  "storage/img/Cuento/"+datos.get(position).foto;
             Picasso.get().load(fotoUrl)
                     .placeholder(R.drawable.ic_baseline_auto_stories_24)
                     .error(R.drawable.ic_baseline_close_24)
                     .into(holder.imageView);
         }
+        */
         holder.textView1.setText(datos.get(position).titulo);
         holder.textView2.setText(datos.get(position).descripcion);
         holder.textView3.setText(datos.get(position).publico);
@@ -76,7 +73,7 @@ public class ItemLecturaAdapter extends RecyclerView.Adapter<ItemLecturaAdapter.
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.dic_itm_img);
+
             textView1 = itemView.findViewById(R.id.txt_dic_itm_titulo);
             textView2 = itemView.findViewById(R.id.txt_dic_itm_descrip);
             textView3 = itemView.findViewById(R.id.txt_dic_itm_user);
