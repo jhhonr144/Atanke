@@ -1,14 +1,11 @@
 package com.example.atanke.lectura.models;
 
-import static com.example.atanke.config.ConfigClient.Url;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,11 +19,6 @@ import com.example.atanke.general.Dao.BDLecturaSesionDao;
 import com.example.atanke.general.dto.api.sesiones.BDLecturaContenidoDTO;
 import com.example.atanke.general.dto.api.sesiones.BDLecturaSesionDTO;
 import com.example.atanke.lectura.Dao.GetLecturaContenidoFk_sesionTask;
-import com.example.atanke.lectura.Dao.GetLecturaSesionFk_lecturaTask;
-import com.example.atanke.ui.lectura.lectura_sessiones;
-import com.squareup.picasso.Picasso;
-
-import java.security.AccessController;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 

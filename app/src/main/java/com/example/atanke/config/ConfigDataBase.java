@@ -14,11 +14,14 @@ import com.example.atanke.config.Converts.ConvertersLecturaTipo;
 import com.example.atanke.config.Converts.ConvertersLecturaUser;
 import com.example.atanke.general.Dao.BDLecturaDao;
 import com.example.atanke.general.Dao.BDLecturaSesionDao;
+import com.example.atanke.general.Dao.BDPalabraDao;
 import com.example.atanke.general.Dao.ConfigDao;
 import com.example.atanke.general.dto.ConfigDTO;
 import com.example.atanke.general.dto.UsuarioDTO;
 import com.example.atanke.general.Dao.UsuarioDao;
 import com.example.atanke.general.dto.api.lecturas.BDLecturaDTO;
+import com.example.atanke.general.dto.api.palabras.BDPalabraDTO;
+import com.example.atanke.general.dto.api.palabras.MultimediaDTO;
 import com.example.atanke.general.dto.api.sesiones.BDLecturaContenidoDTO;
 import com.example.atanke.general.dto.api.sesiones.BDLecturaSesionDTO;
 
@@ -27,8 +30,10 @@ import com.example.atanke.general.dto.api.sesiones.BDLecturaSesionDTO;
     ConfigDTO.class,
     BDLecturaDTO.class,
     BDLecturaSesionDTO.class,
-    BDLecturaContenidoDTO.class
-}, version = 5)
+    BDLecturaContenidoDTO.class,
+    BDPalabraDTO.class,
+    MultimediaDTO.class
+}, version = 6)
 @TypeConverters({
     ConvertersLecturaUser.class,
     ConvertersLecturaPortada.class,
@@ -39,6 +44,7 @@ public abstract class ConfigDataBase extends RoomDatabase {
     public abstract ConfigDao configDao();
     public abstract BDLecturaDao BDLecturaDao();
     public abstract BDLecturaSesionDao BDLecturaSesionDao();
+    public abstract BDPalabraDao BDPalabraDao();
 
     private static volatile ConfigDataBase INSTANCE;
 

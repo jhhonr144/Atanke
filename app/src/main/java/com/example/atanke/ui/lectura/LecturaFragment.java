@@ -51,7 +51,7 @@ public class LecturaFragment extends Fragment {
     private List<ConfigDTO> config;
     private Lectura10Service SLectura;
     private titulos t ;
-private  TextView txtcantidadLecturas;
+    private  TextView txtcantidadLecturas;
     @RequiresApi(api = Build.VERSION_CODES.O)
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

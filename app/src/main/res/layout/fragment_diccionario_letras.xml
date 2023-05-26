@@ -31,5 +31,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dicc_letra_recicle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        />
 </LinearLayout>
