@@ -15,64 +15,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btn_vd_cuento"
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/bordeverde"
-                android:text="Cuentos"
-                android:textColor="@color/dp_app_background" />
-
-            <Button
-                android:id="@+id/btn_vd_tradiciones"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/bordefondoverde"
-                android:text="Tradiciones"
-                android:textColor="@color/black" />
-
-            <Button
-                android:id="@+id/btn_vd_mitos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/bordefondoverde"
-                android:text="Mitos"
-                android:textColor="@color/black" />
-
-            <Button
-                android:id="@+id/btn_vd_todos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/bordefondoverde"
-                android:text="Todos"
-                android:textColor="@color/black" />
-
-            <Button
-                android:id="@+id/btn_vd_leyenda"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/bordefondoverde"
-                android:text="Leyendas"
-                android:textColor="@color/black" />
-
-        </LinearLayout>
+                app:tabMode="scrollable"
+                app:tabGravity="center" />
     </HorizontalScrollView>
 
     <ScrollView
@@ -94,7 +42,6 @@
                 android:id="@+id/recicleP"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/bordeverde"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp" />
         </LinearLayout>
@@ -116,7 +63,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.9"
             android:paddingStart="10dp"
-            android:text="Ultima Actualización" />
+            android:text="Ultima Actualización"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/txt_cantidadl"
@@ -124,7 +72,8 @@
             android:layout_height="match_parent"
             android:layout_weight="0.1"
             android:gravity="center"
-            android:text="3" />
+            android:text="3"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -139,20 +88,16 @@
         app:layout_constraintTop_toBottomOf="@+id/liner_cantidad">
 
         <TextView
-            android:id="@+id/txt_fechaAct8"
-            android:layout_weight=".5"
+            android:id="@+id/txt_fechaAct"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="12 / 07 / 2023 " />
+            android:layout_weight=".5"
+            android:gravity="left"
+            android:paddingStart="10dp"
+            android:text="12 / 07 / 2023 "
+            android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/txt_horaact"
-            android:layout_weight=".5"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="04 : 56" />
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

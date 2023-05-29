@@ -1,14 +1,10 @@
 package com.example.atanke.palabras.models;
 
-import static com.example.atanke.config.ConfigClient.Url;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,16 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.atanke.R;
 import com.example.atanke.config.ConfigDataBase;
-import com.example.atanke.general.Dao.BDLecturaSesionDao;
 import com.example.atanke.general.Dao.BDPalabraDao;
 import com.example.atanke.general.dto.api.palabras.BDPalabraDTO;
-import com.example.atanke.general.dto.api.sesiones.BDLecturaContenidoDTO;
-import com.example.atanke.lectura.Dao.GetLecturaContenidoFk_sesionTask;
-import com.example.atanke.lectura.models.ItemLecturaContenidoAdapter;
-import com.example.atanke.lectura.models.titulos;
 import com.example.atanke.palabras.Dao.GetPalabrasTask;
-import com.example.atanke.ui.lectura.lectura_sessiones;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;

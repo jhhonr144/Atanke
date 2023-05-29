@@ -2,7 +2,6 @@ package com.example.atanke.palabras.Dao;
 
 import android.os.AsyncTask;
 
-import com.example.atanke.general.Dao.BDLecturaDao;
 import com.example.atanke.general.Dao.BDPalabraDao;
 import com.example.atanke.palabras.models.letraGruop;
 

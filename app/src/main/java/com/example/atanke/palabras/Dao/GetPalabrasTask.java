@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 
 import com.example.atanke.general.Dao.BDPalabraDao;
 import com.example.atanke.general.dto.api.palabras.BDPalabraDTO;
-import com.example.atanke.palabras.models.letraGruop;
 
 import java.util.List;
 

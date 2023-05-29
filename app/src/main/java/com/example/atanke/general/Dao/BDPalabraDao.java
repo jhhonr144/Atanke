@@ -5,7 +5,6 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.atanke.general.dto.api.lecturas.BDLecturaDTO;
 import com.example.atanke.general.dto.api.palabras.BDPalabraDTO;
 import com.example.atanke.general.dto.api.palabras.MultimediaDTO;
 import com.example.atanke.palabras.models.letraGruop;

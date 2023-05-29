@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.Atanke" parent="Theme.Material3.DayNight.NoActionBar">
+
         <!-- Primary brand color. -->
         <item name="colorPrimary">#41CB89</item>
         <item name="colorPrimaryVariant">#32865D</item>
