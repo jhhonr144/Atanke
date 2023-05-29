@@ -4,9 +4,11 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 
 public class ValidarFechas {
 
@@ -16,6 +18,12 @@ public class ValidarFechas {
         LocalDate fechaActual = LocalDate.now();
         LocalDate fechaHace7Dias = fechaActual.minusDays(7);
         return fecha.isBefore(fechaHace7Dias.atStartOfDay());
+    }
+
+    public static String obtenerFechaActual() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        return dateFormat.format(calendar.getTime());
     }
 
 }

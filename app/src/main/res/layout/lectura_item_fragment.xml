@@ -2,8 +2,9 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
+    android:layout_height="80dp"
     android:layout_marginStart="5dp"
     android:layout_marginTop="10dp"
     android:layout_marginEnd="5dp"
@@ -11,12 +12,20 @@
     app:cardElevation="5dp"
     tools:context=".lectura.models.intems.lectura_item">
 
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="20dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_montana" />
+
     <LinearLayout
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/background_wave"
+
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingStart="8dp"
@@ -32,8 +41,8 @@
             <LinearLayout
                 android:layout_width="12dp"
                 android:layout_height="40dp"
-                android:minWidth="12dp"
                 android:background="@drawable/barra"
+                android:minWidth="12dp"
                 android:orientation="horizontal" />
         </LinearLayout>
 
@@ -45,28 +54,30 @@
             android:paddingLeft="5dp">
 
             <TextView
-                android:id="@+id/txt_dic_itm_titulo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Titulo" />
-
-            <TextView
-                android:id="@+id/txt_dic_itm_descrip"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:paddingStart="3dp"
-                android:paddingLeft="3dp"
-                android:text="breve descripcion" />
-
-            <TextView
                 android:id="@+id/txt_dic_itm_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="bottom|end"
                 android:paddingLeft="3dp"
-                android:text="Publicado" />
+                android:text="Publicado"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/txt_dic_itm_descrip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="3dp"
+                android:paddingLeft="3dp"
+                android:text="breve descripcion"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/txt_dic_itm_titulo"
+                style="@style/TextTitle"
+                android:layout_width="330dp"
+                android:layout_height="wrap_content"
+                android:text="Titulo"
+                android:textStyle="bold" />
 
 
         </LinearLayout>

@@ -1,6 +1,10 @@
 package com.example.atanke.ui.lectura;
 
+import static com.example.atanke.general.utils.DialogBuilderDinamico.detenerAlertaCargando;
+import static com.example.atanke.general.utils.ValidarFechas.obtenerFechaActual;
+
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +26,8 @@ import com.example.atanke.general.Dao.BDLecturaDao;
 import com.example.atanke.general.Dao.ConfigDao;
 import com.example.atanke.general.dto.ConfigDTO;
 import com.example.atanke.general.dto.api.lecturas.BDLecturaDTO;
+import com.example.atanke.general.utils.DialogBuilderDinamico;
+import com.example.atanke.general.utils.NetworkUtils;
 import com.example.atanke.general.utils.ValidarFechas;
 import com.example.atanke.lectura.Dao.ConfigGuardarAsyncTask;
 import com.example.atanke.lectura.Dao.GetAllConfigTask;
@@ -46,18 +52,17 @@ public class LecturaFragment extends Fragment {
     private RecyclerView recicle;
     private ConfigDataBase db;
     private titulos t ;
-
-    private final String[] tabTitles = {"Todos", "Cuentos", "Leyendas", "Mitos", "Traduciones"};
-
-    private  TextView txtcantidadLecturas;
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    private static final String KEY_FECHA = "fechaActual";
+    private final String[] tabTitles = {"Todos", "Cuentos", "Leyendas", "Mitos", "Tradiciones"};
+    private static final String PREF_NAME = "PHONE_DATA";
+    private  TextView txtcantidadLecturas,fecha;
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         binding = LecturaFragmentBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         db = ConfigDataBase.getInstance(getContext());
         t= new titulos();
         txtcantidadLecturas= binding.txtCantidadl;
+        fecha = binding.txtFechaAct;
         TabLayout tabLayout = binding.tabLayout;
 
         for (String title : tabTitles) {
@@ -65,20 +70,13 @@ public class LecturaFragment extends Fragment {
             tab.setText(title);
             tabLayout.addTab(tab);
         }
-        TabLayout.Tab defaultTab = tabLayout.getTabAt(0); // Obtén el primer tab
+        TabLayout.Tab defaultTab = tabLayout.getTabAt(0);
         if (defaultTab != null) {
-            defaultTab.select(); // Selecciona el tab
+            defaultTab.select();
         }
 
         recicle=binding.recicleP;
-        try {
-            CargarConfig();
-        } catch (ExecutionException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        //$$? forzar actualizacion
-        //llamas consultarLecturarTituloApi pero preguntale si te seguro antes
+        LoadData();
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -96,8 +94,29 @@ public class LecturaFragment extends Fragment {
 
             }
         });
-
         return root;
+    }
+
+    private void LoadData(){
+        boolean isInternetAvailable = NetworkUtils.isNetworkAvailable(requireContext());
+        if (isInternetAvailable) {
+            consultarLecturarTituloApi();
+            SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(KEY_FECHA, obtenerFechaActual());
+            editor.apply();
+            fecha.setText(obtenerFechaActual());
+        } else {
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    CargarConfig();
+                    SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+                    fecha.setText(sharedPreferences.getString(KEY_FECHA, ""));
+                }
+            } catch (ExecutionException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 
@@ -131,18 +150,17 @@ public class LecturaFragment extends Fragment {
     }
 
     private void consultarLecturarTituloApi() {
-
+        DialogBuilderDinamico.alertaCargando(getContext(),"¡Casi listo! Cargando información");
         //$$MOSTRARCARGANDO$$
         //no hay datos descargado hay qe consultar a la web
         Lectura10Service SLectura = LecturaTituloClient.getApiService();
-        SLectura.getLecturaTitulos (
-                        "Bearer 89|LdCRhHUy2wpp5JCHAMpgLen3HNkKJOu1BsLz3iHU",
-                        "1000")
+        SLectura.getLecturaTitulos ("1000")
                 .enqueue(new Callback<LecturaTitulosResponse>() {
                     @Override
                     public void onResponse(
                             @NonNull Call<LecturaTitulosResponse> call,
                             Response<LecturaTitulosResponse> response) {
+                        detenerAlertaCargando();
                         if (response.body() == null) {
                             Toast.makeText(getContext(), "No se puede consultar las lecturas, por favor pruebe despues", Toast.LENGTH_SHORT).show();
                         } else {
@@ -244,25 +262,25 @@ public class LecturaFragment extends Fragment {
         ItemLecturaAdapter itemsRecicle;
         switch (botonSelecionado){
             case 1://cuentos
-                itemsRecicle = new ItemLecturaAdapter(t.getListaCuento());
+                itemsRecicle = new ItemLecturaAdapter(getContext(),t.getListaCuento());
                 cantidad=t.getListaCuento().size() ;
                 break;
 
             case 2://Leyenda
-                itemsRecicle = new ItemLecturaAdapter(t.getListaLeyenda());
+                itemsRecicle = new ItemLecturaAdapter(getContext(),t.getListaLeyenda());
                 cantidad=t.getListaLeyenda().size() ;
                 break;
 
             case 3://Mitos
-                itemsRecicle = new ItemLecturaAdapter(t.getListaMito());
+                itemsRecicle = new ItemLecturaAdapter(getContext(),t.getListaMito());
                 cantidad=t.getListaMito().size( );
                 break;
             case 4://tradiciones
-                itemsRecicle = new ItemLecturaAdapter(t.getListaTradiciones());
+                itemsRecicle = new ItemLecturaAdapter(getContext(),t.getListaTradiciones());
                 cantidad=t.getListaTradiciones().size( );
                 break;
             default://Todos
-                itemsRecicle = new ItemLecturaAdapter(t.getListaTodo());
+                itemsRecicle = new ItemLecturaAdapter(getContext(),t.getListaTodo());
                 cantidad=t.getListaTodo().size();
                 break;
         }
