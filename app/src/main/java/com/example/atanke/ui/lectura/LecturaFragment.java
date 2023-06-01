@@ -1,6 +1,7 @@
 package com.example.atanke.ui.lectura;
 
 import static com.example.atanke.general.utils.DialogBuilderDinamico.detenerAlertaCargando;
+import static com.example.atanke.general.utils.ValidarFechas.convertDateTime;
 import static com.example.atanke.general.utils.ValidarFechas.obtenerFechaActual;
 
 import android.content.Context;
@@ -151,8 +152,6 @@ public class LecturaFragment extends Fragment {
 
     private void consultarLecturarTituloApi() {
         DialogBuilderDinamico.alertaCargando(getContext(),"¡Casi listo! Cargando información");
-        //$$MOSTRARCARGANDO$$
-        //no hay datos descargado hay qe consultar a la web
         Lectura10Service SLectura = LecturaTituloClient.getApiService();
         SLectura.getLecturaTitulos ("1000")
                 .enqueue(new Callback<LecturaTitulosResponse>() {
@@ -179,9 +178,17 @@ public class LecturaFragment extends Fragment {
                     }
                     @Override
                     public void onFailure(Call<LecturaTitulosResponse> call, Throwable t) {
+                        detenerAlertaCargando();
                         Toast.makeText(getContext(),
-                                "No se puede conectar con el servidor, validad tu conecion a internet",
+                                "No se puede conectar con el servidor, buscando en datos locales",
                                 Toast.LENGTH_SHORT).show();
+                        try {
+                            cargarDatos();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
     }
@@ -224,15 +231,15 @@ public class LecturaFragment extends Fragment {
             tt.categoria =l.getFk_tipo();
             tt.publico =l.getUser().getName();
             tt.id =l.getId();
-            try {
-                tt.fecha=l.getCreated_at().toString().split("T")[0];
-            }
-            catch (Exception e){
-                try {
-                    tt.fecha=l.getCreated_at().toString().split(" ")[0];
-                }
-                catch (Exception e1){
-                    tt.fecha="...";
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (l.getCreated_at() != null) {
+
+                    tt.fecha = convertDateTime(l.getCreated_at());
+
+                } else if (l.getUpdated_at() != null) {
+                    tt.fecha = convertDateTime(l.getUpdated_at());
+                }else{
+                    tt.fecha = obtenerFechaActual();
                 }
             }
             switch (l.getFk_tipo()){

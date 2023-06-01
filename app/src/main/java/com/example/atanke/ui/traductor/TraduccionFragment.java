@@ -135,13 +135,13 @@ public class TraduccionFragment extends Fragment implements  TextToSpeech.OnInit
             if(btnIdioma1.getText().toString().equals("Español")){
                 Drawable drawable = getResources().getDrawable(R.drawable.banderasp);
                 Drawable drawable2 = getResources().getDrawable(R.drawable.atanbande);
-// Cambia la imagen del ImageView utilizando setImageDrawable()
+
                 imageView1.setImageDrawable(drawable);
                 imageView2.setImageDrawable(drawable2);
             }else{
                 Drawable drawable = getResources().getDrawable(R.drawable.banderasp);
                 Drawable drawable2 = getResources().getDrawable(R.drawable.atanbande);
-// Cambia la imagen del ImageView utilizando setImageDrawable()
+
                 imageView2.setImageDrawable(drawable);
                 imageView1.setImageDrawable(drawable2);
             }

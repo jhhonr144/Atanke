@@ -9,12 +9,12 @@
 
     <TextView
         android:id="@+id/txt_ls_titulo"
+        style="@style/subTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textStyle="bold"
         android:paddingLeft="3dp"
-        android:text="Titulo" />
+        android:text="Titulo"
+        android:visibility="visible" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,21 +26,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:text="Contenido: " />
+            android:text="Contenido: "
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/txt_ls_contenido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
+            android:text="#"
             android:textStyle="bold"
-            android:text="#" />
+            android:visibility="invisible" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recliclecontenido"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bordeverde"
-        android:visibility="gone" />
+        android:layout_height="match_parent" />
 </LinearLayout>
