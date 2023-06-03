@@ -117,7 +117,7 @@ public class TraduccionFragment extends Fragment implements  TextToSpeech.OnInit
             @Override
             public void onClick(View v) {
                 ClipboardManager clipboardManager = (ClipboardManager) requireActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clipData = ClipData.newPlainText("text", editTraducir.getText().toString());
+                ClipData clipData = ClipData.newPlainText("text", editTraduccion.getText().toString());
                 clipboardManager.setPrimaryClip(clipData);
                 Toast.makeText(requireActivity().getApplicationContext(), "Traduccion copiada en portapapeles", Toast.LENGTH_SHORT).show();
             }
@@ -135,13 +135,13 @@ public class TraduccionFragment extends Fragment implements  TextToSpeech.OnInit
             if(btnIdioma1.getText().toString().equals("Español")){
                 Drawable drawable = getResources().getDrawable(R.drawable.banderasp);
                 Drawable drawable2 = getResources().getDrawable(R.drawable.atanbande);
-// Cambia la imagen del ImageView utilizando setImageDrawable()
+
                 imageView1.setImageDrawable(drawable);
                 imageView2.setImageDrawable(drawable2);
             }else{
                 Drawable drawable = getResources().getDrawable(R.drawable.banderasp);
                 Drawable drawable2 = getResources().getDrawable(R.drawable.atanbande);
-// Cambia la imagen del ImageView utilizando setImageDrawable()
+
                 imageView2.setImageDrawable(drawable);
                 imageView1.setImageDrawable(drawable2);
             }
