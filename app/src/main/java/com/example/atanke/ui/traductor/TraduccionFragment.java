@@ -117,7 +117,7 @@ public class TraduccionFragment extends Fragment implements  TextToSpeech.OnInit
             @Override
             public void onClick(View v) {
                 ClipboardManager clipboardManager = (ClipboardManager) requireActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clipData = ClipData.newPlainText("text", editTraducir.getText().toString());
+                ClipData clipData = ClipData.newPlainText("text", editTraduccion.getText().toString());
                 clipboardManager.setPrimaryClip(clipData);
                 Toast.makeText(requireActivity().getApplicationContext(), "Traduccion copiada en portapapeles", Toast.LENGTH_SHORT).show();
             }

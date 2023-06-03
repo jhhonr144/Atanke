@@ -42,9 +42,7 @@ public class ItemLecturaSesionAdapter extends RecyclerView.Adapter<ItemLecturaSe
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        // Asignar valores a las vistas del elemento
         Context context = holder.itemView.getContext();
-
 
        if(datos.get(position).getNombre().equalsIgnoreCase( "default")){
            holder.textView1.setVisibility(View.GONE);
@@ -53,7 +51,6 @@ public class ItemLecturaSesionAdapter extends RecyclerView.Adapter<ItemLecturaSe
            holder.textView1.setText(datos.get(position).getNombre());
        }
        holder.textView2.setText(datos.get(position).getContenidos()+ "");
-                    // Cargar la información y mostrar el segundo RecyclerView
                     try {
                         cargarInformacionSegundoRecyclerView(holder.reciclec, context,datos.get(position).getId());
                     } catch (ExecutionException e) {
@@ -108,7 +105,6 @@ public class ItemLecturaSesionAdapter extends RecyclerView.Adapter<ItemLecturaSe
                     contenidosSet.add(contenido);
                 }
             }
-            // guardamos contenido
             editor.putStringSet("KEY_CONTENIDO", new HashSet<>(contenidosSet));
             editor.apply();
 

@@ -135,7 +135,6 @@ public class LecturaFragment extends Fragment {
             for(ConfigDTO confi: config){
                 if(confi.getNombre().equalsIgnoreCase( "LecturaTitulos")){
                     ValidarFechas validate = new ValidarFechas();
-                    //si ya pasaron 7 dia retorna yes
                     buscar=!validate.hanPasado7Dias(confi.getFecha());
                     break;
                 }
