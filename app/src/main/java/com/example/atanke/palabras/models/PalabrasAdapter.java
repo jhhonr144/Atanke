@@ -5,27 +5,22 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.atanke.R;
 import com.example.atanke.config.ConfigDataBase;
-import com.example.atanke.general.Dao.BDPalabraDao;
-import com.example.atanke.general.dto.api.palabras.BDPalabraDTO;
-import com.example.atanke.lectura.models.ItemLecturaContenidoAdapter;
-import com.example.atanke.palabras.Dao.GetPalabrasTask;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class PalabrasAdapter extends RecyclerView.Adapter<PalabrasAdapter.ViewHolder> {
-    private List<BDPalabraDTO> datos;
+    private List<palabrasRelacion> datos;
     private ConfigDataBase db;
-    public PalabrasAdapter(List<BDPalabraDTO> listaTodo) {
+    public PalabrasAdapter(List<palabrasRelacion> listaTodo) {
         datos=listaTodo;
     }
 
@@ -40,24 +35,32 @@ public class PalabrasAdapter extends RecyclerView.Adapter<PalabrasAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         // Asignar valores a las vistas del elemento
-        holder.textView1.setText(datos.get(position).getPalabra());
-        holder.textView2.setText(datos.get(position).getPronunciar());
-        holder.textView3.setText(datos.get(position).getMultilent()+"");
-        /*
-        holder.textView1.setOnClickListener(new View.OnClickListener() {
+        holder.textView1.setText(datos.get(position).palabra);
+        holder.textView2.setText(datos.get(position).pronunciar);
+        holder.textView4.setText(datos.get(position).palabra1);
+        holder.textView5.setText(datos.get(position).pronunciar1);
+        holder.textView3.setText(datos.get(position).count+"");
+        if(datos.get(position).count==0)
+            holder.boton.setText("Agregar");
+        holder.boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(holder.recicle.getVisibility()==View.VISIBLE)
                     holder.recicle.setVisibility(View.GONE);
                 else{
-                    cargarInformacionSegundoRecyclerView(holder.recicle, v.getContext(), datos.get(position).letra);
+                    try {
+                        cargarInformacionSegundoRecyclerView(holder.recicle, v.getContext(),datos.get(position).count);
+                    } catch (ExecutionException e) {
+                        throw new RuntimeException(e);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                     holder.recicle.setVisibility(View.VISIBLE);
                 }
             }
         });
-        */
     }
-    private void cargarInformacionSegundoRecyclerView(RecyclerView recyclerView, Context context,String id) throws ExecutionException, InterruptedException {
+    private void cargarInformacionSegundoRecyclerView(RecyclerView recyclerView, Context context,int cantidad) throws ExecutionException, InterruptedException {
        /*
         db = ConfigDataBase.getInstance(context);
         List<BDPalabraDTO> listapabra;
@@ -86,13 +89,19 @@ public class PalabrasAdapter extends RecyclerView.Adapter<PalabrasAdapter.ViewHo
         public TextView textView1;
         public TextView textView2;
         public TextView textView3;
+        public TextView textView4;
+        public TextView textView5;
+        public Button boton;
         public RecyclerView recicle;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView1 = itemView.findViewById(R.id.diccf2_palabra);
             textView2 = itemView.findViewById(R.id.diccf2_pronuciar);
+            textView4 = itemView.findViewById(R.id.diccf2_palabra2);
+            textView5 = itemView.findViewById(R.id.diccf2_pronuciar2);
             textView3 = itemView.findViewById(R.id.diccf2_contenidon);
-            //recicle = itemView.findViewById(R.id.dicc_letra_recicle);
+            recicle = itemView.findViewById(R.id.diccf2__recicle);
+            boton = itemView.findViewById(R.id.diccf2_button);
         }
     }
 }

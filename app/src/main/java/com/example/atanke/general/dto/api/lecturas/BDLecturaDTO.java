@@ -25,6 +25,7 @@ public class BDLecturaDTO implements Serializable {
     @PrimaryKey(autoGenerate = false)
     private int id;
     private String nombre;
+    private String author;
     private int fk_portada;
     private int fk_tipo;
     private int user_id;

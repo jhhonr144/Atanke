@@ -75,7 +75,6 @@ public class LecturaFragment extends Fragment {
         if (defaultTab != null) {
             defaultTab.select();
         }
-
         recicle=binding.recicleP;
         LoadData();
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -84,15 +83,11 @@ public class LecturaFragment extends Fragment {
                 int position = tab.getPosition();
                 cargarRecicle(position);
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
-
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
         return root;
@@ -100,7 +95,11 @@ public class LecturaFragment extends Fragment {
 
     private void LoadData(){
         boolean isInternetAvailable = NetworkUtils.isNetworkAvailable(requireContext());
+        //$$ sin dtos pero con el icino on, se mete en el si
         if (isInternetAvailable) {
+            //aqui no deberias validar que no halla pasado 7 dias
+            //por qe que si no hay net, abajo valida para consultar, ....
+            //$$
             consultarLecturarTituloApi();
             SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -119,8 +118,6 @@ public class LecturaFragment extends Fragment {
             }
         }
     }
-
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void CargarConfig() throws ExecutionException, InterruptedException {
         ConfigDao ConfigDao = db.configDao();
@@ -170,7 +167,7 @@ public class LecturaFragment extends Fragment {
                                 try {
                                     cargarDatos();
                                 } catch (ExecutionException | InterruptedException e) {
-                                    throw new RuntimeException(e);
+                                    Toast.makeText(getContext(), "Error al procesar la lista nueva",Toast.LENGTH_SHORT);
                                 }
                             }
                         }
@@ -228,13 +225,13 @@ public class LecturaFragment extends Fragment {
             tt.titulo=l.getNombre();
             tt.descripcion=l.getDescripcion();
             tt.categoria =l.getFk_tipo();
-            tt.publico =l.getUser().getName();
+            tt.publico =l.getAuthor()==null?"":l.getAuthor();
             tt.id =l.getId();
+            //$$esta es la fecha que sufre cambio la lectura, en teoria nunca es vacias
+            //asi que solo pon a validar el update
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 if (l.getCreated_at() != null) {
-
                     tt.fecha = convertDateTime(l.getCreated_at());
-
                 } else if (l.getUpdated_at() != null) {
                     tt.fecha = convertDateTime(l.getUpdated_at());
                 }else{
@@ -245,16 +242,14 @@ public class LecturaFragment extends Fragment {
                 case 1://cuentos
                     t.agregarCuento(tt);
                     break;
-
                 case 2://Leyenda
                     t.agregarLeyenda(tt);
                     break;
-
                 case 3://Mitos
-                    tt.agregarMito(tt);
+                    t.agregarMito(tt);
                     break;
                 case 4://tradiciones
-                    tt.agregarTradiciones(tt);
+                    t.agregarTradiciones(tt);
                     break;
             }
         }
@@ -271,12 +266,10 @@ public class LecturaFragment extends Fragment {
                 itemsRecicle = new ItemLecturaAdapter(getContext(),t.getListaCuento());
                 cantidad=t.getListaCuento().size() ;
                 break;
-
             case 2://Leyenda
                 itemsRecicle = new ItemLecturaAdapter(getContext(),t.getListaLeyenda());
                 cantidad=t.getListaLeyenda().size() ;
                 break;
-
             case 3://Mitos
                 itemsRecicle = new ItemLecturaAdapter(getContext(),t.getListaMito());
                 cantidad=t.getListaMito().size( );
