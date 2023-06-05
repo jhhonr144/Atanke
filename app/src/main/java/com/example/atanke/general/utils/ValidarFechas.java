@@ -21,7 +21,6 @@ public class ValidarFechas {
         LocalDate fechaHace7Dias = fechaActual.minusDays(7);
         return fecha.isBefore(fechaHace7Dias.atStartOfDay());
     }
-
     public static String obtenerFechaActual() {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -31,7 +30,6 @@ public class ValidarFechas {
     public static String convertDateTime(String inputDate) {
         Instant instant = Instant.parse(inputDate);
         LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return localDateTime.format(formatter);
     }

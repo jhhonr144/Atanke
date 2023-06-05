@@ -62,7 +62,7 @@ public class LetrasGruopAdapter extends RecyclerView.Adapter<LetrasGruopAdapter.
     }
     private void cargarInformacionSegundoRecyclerView(RecyclerView recyclerView, Context context,String id) throws ExecutionException, InterruptedException {
         db = ConfigDataBase.getInstance(context);
-        List<BDPalabraDTO> listapabra;
+        List<palabrasRelacion> listapabra;
         BDPalabraDao palabraDao= db.BDPalabraDao();
         GetPalabrasTask task = new GetPalabrasTask(palabraDao,id+"");
         task.execute();

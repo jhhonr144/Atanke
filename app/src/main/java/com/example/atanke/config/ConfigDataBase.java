@@ -21,6 +21,7 @@ import com.example.atanke.general.dto.UsuarioDTO;
 import com.example.atanke.general.Dao.UsuarioDao;
 import com.example.atanke.general.dto.api.lecturas.BDLecturaDTO;
 import com.example.atanke.general.dto.api.palabras.BDPalabraDTO;
+import com.example.atanke.general.dto.api.palabras.BDPalabraRelacionDTO;
 import com.example.atanke.general.dto.api.palabras.MultimediaDTO;
 import com.example.atanke.general.dto.api.sesiones.BDLecturaContenidoDTO;
 import com.example.atanke.general.dto.api.sesiones.BDLecturaSesionDTO;
@@ -32,8 +33,9 @@ import com.example.atanke.general.dto.api.sesiones.BDLecturaSesionDTO;
     BDLecturaSesionDTO.class,
     BDLecturaContenidoDTO.class,
     BDPalabraDTO.class,
-    MultimediaDTO.class
-}, version = 6)
+    MultimediaDTO.class,
+    BDPalabraRelacionDTO.class
+}, version = 8)
 @TypeConverters({
     ConvertersLecturaUser.class,
     ConvertersLecturaPortada.class,

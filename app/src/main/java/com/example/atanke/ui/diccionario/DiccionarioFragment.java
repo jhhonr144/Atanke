@@ -23,15 +23,19 @@ import com.example.atanke.general.Dao.BDPalabraDao;
 import com.example.atanke.general.Dao.ConfigDao;
 import com.example.atanke.general.dto.ConfigDTO;
 import com.example.atanke.general.dto.api.palabras.BDPalabraDTO;
+import com.example.atanke.general.dto.api.palabras.BDPalabraRelacionDTO;
 import com.example.atanke.general.dto.api.palabras.MultimediaDTO;
 import com.example.atanke.general.utils.ValidarFechas;
 import com.example.atanke.lectura.Dao.ConfigGuardarAsyncTask;
 import com.example.atanke.lectura.Dao.GetAllConfigTask;
 import com.example.atanke.palabras.Dao.GetPalabrasGroupTask;
 import com.example.atanke.palabras.client.PalabrasClient;
+import com.example.atanke.palabras.client.PalabrasRelacionClient;
 import com.example.atanke.palabras.models.LetrasGruopAdapter;
+import com.example.atanke.palabras.models.PalabrasRelacionResponse;
 import com.example.atanke.palabras.models.PalabrasResponse;
 import com.example.atanke.palabras.models.letraGruop;
+import com.example.atanke.palabras.services.PalabrasRelacionService;
 import com.example.atanke.palabras.services.PalabrasService;
 
 import java.util.List;
@@ -49,6 +53,7 @@ public class DiccionarioFragment extends Fragment {
     private ConfigDataBase db;
     private List<ConfigDTO> config;
     private PalabrasService Servi;
+    private PalabrasRelacionService Servi2;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -114,16 +119,11 @@ public class DiccionarioFragment extends Fragment {
         recicle.setLayoutManager(layautManayer);
         itemsRecicle= new LetrasGruopAdapter(grupoLetra);
         recicle.setAdapter(itemsRecicle);
-    }
-
-
-    private void ConfigBoton() { }
-
+    } 
+    private void ConfigBoton() { } 
     private void ConfigText() {
         txt_fechaActualizacion=binding.diccf1TxtFecha;
-    }
-
-
+    } 
     private void consultarPalabrasApi(int cantidadActualPalabras) {
         //$$MOSTRARCARGANDO$$
         //no hay datos descargado hay qe consultar a la web
@@ -143,13 +143,13 @@ public class DiccionarioFragment extends Fragment {
                                 if(response.body().getDatos_len()!=cantidadActualPalabras )
                                     guardarPalabras(response.body().getDatos());
                                 guardarConfig("Palabras", response.body().getDatos_len() + "", getContext());
-
+                                cargarRelaciones();
                                 try {
                                     cargarDatos();
                                 } catch (ExecutionException e) {
-                                    throw new RuntimeException(e);
+                                    Toast.makeText(getContext(), "Error al Listar la informacion", Toast.LENGTH_SHORT).show();
                                 } catch (InterruptedException e) {
-                                    throw new RuntimeException(e);
+                                    Toast.makeText(getContext(), "Error al Listar la informacion", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }
@@ -163,17 +163,58 @@ public class DiccionarioFragment extends Fragment {
                 });
     }
 
+    private void cargarRelaciones() {
+        Servi2 = PalabrasRelacionClient.getApiService();
+        Servi2.getPalabrasRelacion()
+                .enqueue(new Callback<PalabrasRelacionResponse>() {
+                    @Override
+                    public void onResponse(
+                            @NonNull Call<PalabrasRelacionResponse> call,
+                            Response<PalabrasRelacionResponse> response) {
+                        if (response.body() == null) {
+                            Toast.makeText(getContext(), "No se puede consultar las traduciones de las palabras, por favor pruebe despues", Toast.LENGTH_SHORT).show();
+                        } else {
+                            if(response.body().getDatos_len()==0) {
+                                Toast.makeText(getContext(), "Sin  traduciones de palabras, por favor pruebe despues", Toast.LENGTH_SHORT).show();
+                            }else {
+                                guardarPalabrasRelacion(response.body().getDatos());
+                            }
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<PalabrasRelacionResponse> call, Throwable t) {
+                        Toast.makeText(getContext(),
+                            "No se puede conectar con el servidor, validad tu conecion a internet",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void guardarPalabrasRelacion(List<BDPalabraRelacionDTO> datos) {
+        new DiccionarioFragment.GuardarPalabrasRelacionTask().execute(datos);
+    }
+    private class GuardarPalabrasRelacionTask extends AsyncTask<List<BDPalabraRelacionDTO>, Void, Void> {
+        @Override
+        protected Void doInBackground(List<BDPalabraRelacionDTO>... palabras ) {
+            BDPalabraDao BDPalabraDao = ConfigDataBase.getInstance(getContext()).BDPalabraDao();
+            BDPalabraDao.dellAllRelacion();
+            for (BDPalabraRelacionDTO relacion : palabras[0]) {
+                BDPalabraDao.insertr(relacion);
+            }
+            return null;
+        }
+    }
+
     private void guardarPalabras(List<BDPalabraDTO> datos) {
         new DiccionarioFragment.GuardarPalabrasTask().execute(datos);
     }
-
     private class GuardarPalabrasTask extends AsyncTask<List<BDPalabraDTO>, Void, Void> {
         @Override
         protected Void doInBackground(List<BDPalabraDTO>... palabras ) {
             BDPalabraDao BDPalabraDao = ConfigDataBase.getInstance(getContext()).BDPalabraDao();
             BDPalabraDao.dellAll();
             for (BDPalabraDTO palabra : palabras[0]) {
-                palabra.setLetra(palabra.getPalabra().substring(0,1));
+                palabra.setLetra(palabra.getPalabra().substring(0,1).toUpperCase());
                 BDPalabraDao.insert(palabra);
                 for(MultimediaDTO contenido :palabra.getMultimedia()){
                     BDPalabraDao.insertm(contenido);
@@ -182,8 +223,6 @@ public class DiccionarioFragment extends Fragment {
             return null;
         }
     }
-
-
     private void guardarConfig(String nombre, String valor, Context context) {
         new ConfigGuardarAsyncTask(
                 nombre,

@@ -38,12 +38,10 @@ public class titulos {
             listaCuento.add(cuento);
             todo.add(cuento);
         }
-
         public void agregarLeyenda(titulos leyenda) {
             listaLeyenda.add(leyenda);
             todo.add(leyenda);
         }
-
         public void agregarMito(titulos mito) {
             listaMito.add(mito);
             todo.add(mito);
@@ -52,25 +50,22 @@ public class titulos {
             listaTradiciones.add(tradiciones);
             todo.add(tradiciones);
         }
-
         // Métodos para obtener las listas
         public List<titulos> getListaCuento() {
             return listaCuento;
         }
-
         public List<titulos> getListaLeyenda() {
             return listaLeyenda;
         }
-
-    public List<titulos> getListaTradiciones() {
-        return listaTradiciones;
-    }
-    public List<titulos> getListaMito() {
-        return listaMito;
-    }
-    public List<titulos> getListaTodo() {
-        return todo;
-    }
+        public List<titulos> getListaTradiciones() {
+            return listaTradiciones;
+        }
+        public List<titulos> getListaMito() {
+            return listaMito;
+        }
+        public List<titulos> getListaTodo() {
+            return todo;
+        }
 
         @Override
         public String toString() {
