@@ -9,7 +9,7 @@
     tools:context=".ui.lectura.lectura_sessiones">
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/als_portada_img"
         android:layout_width="match_parent"
         android:layout_height="313dp"
         android:layout_alignParentTop="true"

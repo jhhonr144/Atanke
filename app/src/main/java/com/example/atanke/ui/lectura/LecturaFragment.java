@@ -227,6 +227,8 @@ public class LecturaFragment extends Fragment {
             tt.categoria =l.getFk_tipo();
             tt.publico =l.getAuthor()==null?"":l.getAuthor();
             tt.id =l.getId();
+            tt.portada =  l.getPortada().getMultimedia();
+
             //$$esta es la fecha que sufre cambio la lectura, en teoria nunca es vacias
             //asi que solo pon a validar el update
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
