@@ -14,4 +14,5 @@ import lombok.NoArgsConstructor;
 public class LecturaPortadaDTO implements Serializable {
     private int id;
     private String multimedia;
+
 }

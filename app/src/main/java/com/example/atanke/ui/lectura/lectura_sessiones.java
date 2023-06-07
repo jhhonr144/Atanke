@@ -1,11 +1,16 @@
 package com.example.atanke.ui.lectura;
 
+import static com.example.atanke.config.ConfigClient.Url;
 import static com.example.atanke.general.utils.DialogBuilderDinamico.detenerAlertaCargando;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,9 +19,11 @@ import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,10 +36,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.atanke.R;
 import com.example.atanke.config.ConfigDataBase;
 import com.example.atanke.general.Dao.BDLecturaSesionDao;
+import com.example.atanke.general.dto.api.lecturas.AfotosDTO;
 import com.example.atanke.general.dto.api.sesiones.BDLecturaContenidoDTO;
 import com.example.atanke.general.dto.api.sesiones.BDLecturaSesionDTO;
 import com.example.atanke.general.utils.DialogBuilderDinamico;
 import com.example.atanke.general.utils.NetworkUtils;
+import com.example.atanke.lectura.Dao.GetFotoTask;
 import com.example.atanke.lectura.Dao.GetLecturaSesionFk_lecturaTask;
 import com.example.atanke.lectura.client.LecturaSesionClient;
 import com.example.atanke.lectura.models.ItemLecturaSesionAdapter;
@@ -42,7 +51,10 @@ import com.example.atanke.traducirpalabras.client.TraducirPalabraClient;
 import com.example.atanke.traducirpalabras.models.TraducirPalabraResponse;
 import com.example.atanke.traducirpalabras.services.TraducirPalabraService;
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
+import java.io.ByteArrayOutputStream;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -51,12 +63,13 @@ import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import lombok.SneakyThrows;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class lectura_sessiones extends AppCompatActivity implements TextToSpeech.OnInitListener {
-    private String idTitulo, resultadoFinal, palabraSeleccionada;
+    private String idTitulo, resultadoFinal, palabraSeleccionada,urlportada;
     private RecyclerView recicle;
     private ConfigDataBase db;
     private List<BDLecturaSesionDTO> listSesiones;
@@ -66,7 +79,9 @@ public class lectura_sessiones extends AppCompatActivity implements TextToSpeech
     StringBuilder contenidoFinal;
     MotionEvent event;
     Context context;
+    ImageView portada;
 
+    @SuppressLint("MissingInflatedId")
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,9 +103,15 @@ public class lectura_sessiones extends AppCompatActivity implements TextToSpeech
         autor = findViewById(R.id.txt_s_autor);
         autor.setText(intent.getStringExtra("Autor"));
         contenidoTraducido = findViewById(R.id.txt_busqueda);
-
+        portada = findViewById(R.id.als_portada_img);
+        urlportada=intent.getStringExtra("Portada");
         boolean isInternetAvailable = NetworkUtils.isNetworkAvailable(this);
         if (isInternetAvailable) {
+            try {
+                contultarFoto();
+            } catch (ExecutionException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             cosultarSesionesApi();
         }else{
             try {
@@ -99,7 +120,6 @@ public class lectura_sessiones extends AppCompatActivity implements TextToSpeech
                 throw new RuntimeException(e);
             }
         }
-
         SharedPreferences sharedPreferences = getSharedPreferences("DATOS_LECTURAS", Context.MODE_PRIVATE);
         Set<String> contenidosSet = sharedPreferences.getStringSet("KEY_CONTENIDO", new HashSet<>());
         contenidoFinal = new StringBuilder();
@@ -108,7 +128,6 @@ public class lectura_sessiones extends AppCompatActivity implements TextToSpeech
             contenidoFinal.insert(0, contenido);
             contenidoFinal.insert(0, " ");
         }
-
         resultadoFinal = "Título: " + titulo.getText().toString() + ". " + "Autor: " + autor.getText().toString() + ". " + contenidoFinal;
 
         findViewById(R.id.accion_narrar).setOnClickListener(v -> convertirTextoAVoz());
@@ -123,14 +142,11 @@ public class lectura_sessiones extends AppCompatActivity implements TextToSpeech
             getTraduccionPalabra(String.valueOf(contenidoFinal), "1");
         });
         textToSpeech = new TextToSpeech(getApplicationContext(), this);
-
         contenidoTraducido.setOnTouchListener((v, event) -> {
             // Guardar el evento en la variable event
             this.event = event;
             return false;
         });
-
-
         contenidoTraducido.setOnClickListener(v -> {
             int[] pos = {0, 0};
             contenidoTraducido.getLocationOnScreen(pos);
@@ -154,6 +170,82 @@ public class lectura_sessiones extends AppCompatActivity implements TextToSpeech
 
     }
 
+    private void contultarFoto() throws ExecutionException, InterruptedException {
+        if (urlportada != null) {
+            String fotoUrl = Url + "storage/img/Cuento/" + urlportada;
+            AsyncTask<Void, Void, String> consultaFotoTask = new AsyncTask<Void, Void, String>() {
+                @Override
+                protected String doInBackground(Void... voids) {
+                    db = ConfigDataBase.getInstance(getBaseContext());
+                    BDLecturaSesionDao lsesiondao = db.BDLecturaSesionDao();
+                    AfotosDTO foto = lsesiondao.getSelect_foto(urlportada);
+                    if (foto != null) {
+                        return foto.getContenido();
+                    } else {
+                        return null;
+                    }
+                }
+                @Override
+                protected void onPostExecute(String contenidoFoto) {
+                    if (contenidoFoto == null) {
+                        // Consultar la imagen utilizando Picasso y guardarla como Base64
+                        Picasso.get().load(fotoUrl)
+                                .placeholder(R.drawable.bgdefaul)
+                                .into(new Target() {
+                                    @Override
+                                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                        // Convertir el mapa de bits a una cadena Base64
+                                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                                        byte[] imageBytes = baos.toByteArray();
+                                        String base64Image =  new String(Base64.encode(imageBytes, Base64.DEFAULT));
+                                        AfotosDTO foto= new AfotosDTO();
+                                        foto.setUrl(urlportada);
+                                        foto.setFk(0);
+                                        foto.setContenido(base64Image);
+                                        guardarFoto(foto);
+                                        // Mostrar la imagen en la vista portada
+                                        portada.setImageBitmap(bitmap);
+                                    }
+
+                                    @Override
+                                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                                        // Manejar el caso en que la carga de la imagen falla
+                                    }
+
+                                    @Override
+                                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+                                        // Método opcional para realizar alguna preparación antes de cargar la imagen
+                                    }
+                                });
+                    } else {
+                        // Cargar la imagen directamente desde la cadena Base64
+                        byte[] decodedString = Base64.decode(contenidoFoto, Base64.DEFAULT);
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                        portada.setImageBitmap(bitmap);
+                    }
+
+                }
+            };
+
+            consultaFotoTask.execute();
+        }
+    }
+
+    private void guardarFoto(AfotosDTO datos) {
+        new GuardarFotoTask().execute(datos);
+    }
+    private class GuardarFotoTask extends AsyncTask<AfotosDTO, Void, Void> {
+        @Override
+        protected Void doInBackground(AfotosDTO... datos) {
+            BDLecturaSesionDao BDLecturaSesionDao = ConfigDataBase.getInstance(getBaseContext()).BDLecturaSesionDao();
+            BDLecturaSesionDao.insertfoto(datos[0]);
+            return null;
+        }
+    }
+
+
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void CargarConfig() throws ExecutionException, InterruptedException {
         BDLecturaSesionDao lsesiondao = db.BDLecturaSesionDao();
@@ -166,7 +258,6 @@ public class lectura_sessiones extends AppCompatActivity implements TextToSpeech
             cargarRecicle();
         }
     }
-
     private void cosultarSesionesApi() {
         DialogBuilderDinamico.alertaCargando(this,"¡Casi listo! Cargando información");
         LecturaSesionService lsServicio = LecturaSesionClient.getApiService();
@@ -189,7 +280,6 @@ public class lectura_sessiones extends AppCompatActivity implements TextToSpeech
                             }
                         }
                     }
-
                     @Override
                     public void onFailure(@NonNull Call<LecturaSesionResponse> call, @NonNull Throwable t) {
                         detenerAlertaCargando();
@@ -204,24 +294,9 @@ public class lectura_sessiones extends AppCompatActivity implements TextToSpeech
                     }
                 });
     }
-
     private void guardarLecturasSesiones(List<BDLecturaSesionDTO> datos) {
         new GuardarLecturasTask().execute(datos);
     }
-
-    @Override
-    public void onInit(int i) {
-        if (i == TextToSpeech.SUCCESS) {
-            Locale language = Locale.getDefault();
-            int result = textToSpeech.setLanguage(language);
-            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                Log.e("TTS", "Lenguaje no soportado");
-            }
-        } else {
-            Log.e("TTS", "Voz no disponible");
-        }
-    }
-
     private class GuardarLecturasTask extends AsyncTask<List<BDLecturaSesionDTO>, Void, Void> {
         @Override
         protected Void doInBackground(List<BDLecturaSesionDTO>... Sesiones) {
@@ -241,13 +316,24 @@ public class lectura_sessiones extends AppCompatActivity implements TextToSpeech
         }
     }
 
+    @Override
+    public void onInit(int i) {
+        if (i == TextToSpeech.SUCCESS) {
+            Locale language = Locale.getDefault();
+            int result = textToSpeech.setLanguage(language);
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("TTS", "Lenguaje no soportado");
+            }
+        } else {
+            Log.e("TTS", "Voz no disponible");
+        }
+    }
     private void cargarRecicle() {
         LinearLayoutManager layautManayer = new LinearLayoutManager(getBaseContext());
         recicle.setLayoutManager(layautManayer);
         ItemLecturaSesionAdapter itemsRecicle = new ItemLecturaSesionAdapter(listSesiones);
         recicle.setAdapter(itemsRecicle);
     }
-
     public void convertirTextoAVoz() {
         Toast.makeText(getApplicationContext(), "Reproduciendo...", Toast.LENGTH_SHORT).show();
         String texto = resultadoFinal;
@@ -264,7 +350,6 @@ public class lectura_sessiones extends AppCompatActivity implements TextToSpeech
             }
         }
     }
-
     @Override
     public void onDestroy() {
         // Liberar recursos de TextToSpeech
@@ -274,7 +359,6 @@ public class lectura_sessiones extends AppCompatActivity implements TextToSpeech
         }
         super.onDestroy();
     }
-
     private void getTraduccionPalabra(String data, String fk_idioma) {
         DialogBuilderDinamico.alertaCargando(this,"¡Casi listo! Buscando...");
         traducirPalabraService.getTraducir(data, fk_idioma).enqueue(new Callback<>() {
@@ -291,9 +375,7 @@ public class lectura_sessiones extends AppCompatActivity implements TextToSpeech
                     assert response.body() != null;
                     getsnackbar(response.body().getTraduccion());
                 }
-
             }
-
             @Override
             public void onFailure(@NonNull Call<TraducirPalabraResponse> call, @NonNull Throwable t) {
                 detenerAlertaCargando();
@@ -301,7 +383,6 @@ public class lectura_sessiones extends AppCompatActivity implements TextToSpeech
             }
         });
     }
-
     public void mostrarTextoConColores(String texto, TextView editText) {
         SpannableString spannableString = new SpannableString(texto);
         Pattern pattern = Pattern.compile("\\b(?![^<>]*>)\\w+\\b");

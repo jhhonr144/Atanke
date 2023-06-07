@@ -8,6 +8,7 @@ public class titulos {
         public String descripcion;
         public int categoria;
         public int id;
+        public String portada;
         public String publico;
         public String fecha;
         private List<titulos> listaCuento;

@@ -89,6 +89,7 @@ public class ItemLecturaAdapter extends RecyclerView.Adapter<ItemLecturaAdapter.
                 intent.putExtra("Nombre", datos.get(position).titulo);
                 intent.putExtra("Autor", datos.get(position).publico);
                 intent.putExtra("Fecha", datos.get(position).fecha);
+                intent.putExtra("Portada", datos.get(position).portada);
                 context.startActivity(intent);
 
                Log.i("Titulo", datos.get(position).id+"");
