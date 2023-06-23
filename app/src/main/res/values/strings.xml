@@ -51,4 +51,10 @@
     <string name="cuentos">Cuentos</string>
     <string name="tradiciones">Tradiciones</string>
     <string name="tx_fecha">yyyy-MM-dd HH:mm</string>
+
+    <string-array name="tipos_archivo">
+
+        <item>Foto</item>
+    </string-array>
+
 </resources>

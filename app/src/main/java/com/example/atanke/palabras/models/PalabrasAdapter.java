@@ -2,6 +2,7 @@ package com.example.atanke.palabras.models;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,40 +43,23 @@ public class PalabrasAdapter extends RecyclerView.Adapter<PalabrasAdapter.ViewHo
         holder.textView5.setText(datos.get(position).pronunciar1);
         holder.textView3.setText(datos.get(position).count+"");
         if(datos.get(position).count==0)
-            holder.boton.setText("Agregar");
+            holder.boton.setText("Ir a agregar");
         holder.boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(holder.recicle.getVisibility()==View.VISIBLE)
-                    holder.recicle.setVisibility(View.GONE);
-                else{
-                    try {
-                        cargarInformacionSegundoRecyclerView(holder.recicle,
-                                v.getContext(),datos.get(position).count);
-                    } catch (ExecutionException e) {
-                        throw new RuntimeException(e);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    holder.recicle.setVisibility(View.VISIBLE);
-                }
+                cargarInformacionSegundoRecyclerView( v.getContext(),datos.get(position));
             }
         });
     }
-    private void cargarInformacionSegundoRecyclerView(RecyclerView recyclerView, Context context,int cantidad) throws ExecutionException, InterruptedException {
-        LinearLayoutManager layautManayer = new LinearLayoutManager(context);
-        recyclerView.setLayoutManager(layautManayer);
-        PalabrasContenidoAdapter items;
-        if(cantidad==0){
-           //pss no hay contenido
-            items= new PalabrasContenidoAdapter(null);
-       }
-       else{
-           //buscar contenido
-            items= new PalabrasContenidoAdapter(null);
-        }
-        recyclerView.setAdapter(items);
+
+    private void cargarInformacionSegundoRecyclerView(Context context, palabrasRelacion palabrasRelacion) {
+        //##puss aqui pasa a una activity por que otro recicle me da error lol
+        Intent intent = new Intent(context, activity_diccionario_palabra_contenido.class);
+        intent.putExtra("objeto", palabrasRelacion); // Pasa el ID como extra del intent
+        context.startActivity(intent);
     }
+
+
     @Override
     public int getItemCount() {
         return datos==null?0:datos.size();
@@ -88,7 +72,6 @@ public class PalabrasAdapter extends RecyclerView.Adapter<PalabrasAdapter.ViewHo
         public TextView textView4;
         public TextView textView5;
         public Button boton;
-        public RecyclerView recicle;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView1 = itemView.findViewById(R.id.diccf2_palabra);
@@ -96,7 +79,6 @@ public class PalabrasAdapter extends RecyclerView.Adapter<PalabrasAdapter.ViewHo
             textView4 = itemView.findViewById(R.id.diccf2_palabra2);
             textView5 = itemView.findViewById(R.id.diccf2_pronuciar2);
             textView3 = itemView.findViewById(R.id.diccf2_contenidon);
-            recicle = itemView.findViewById(R.id.diccf2__recicle);
             boton = itemView.findViewById(R.id.diccf2_button);
         }
     }

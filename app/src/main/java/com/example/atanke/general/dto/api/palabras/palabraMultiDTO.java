@@ -17,20 +17,17 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
-@Entity(tableName = "multimedia")
-public class MultimediaDTO {
+@Entity(tableName = "palabramulti")
+public class palabraMultiDTO {
     @PrimaryKey(autoGenerate = false)
     private int id;
-    private String descripcion;
-    private String multimedia;
-    private String fk_user;
-    private String fk_tm;
+    private String fk_palabra;
+    private String fk_multimedia;
     @Ignore
-    private palabraMultiDTO pivot;
-    public MultimediaDTO() {}
+    public palabraMultiDTO() {}
     @Dao
-    public interface MultimediaDao {
-        @Query("SELECT * FROM multimedia")
-        List<BDLecturaContenidoDTO> getAllMultimedia();
+    public interface palabraMultiDao {
+        @Query("SELECT * FROM palabramulti")
+        List<palabraMultiDTO> getAllpalabraMulti();
     }
 }

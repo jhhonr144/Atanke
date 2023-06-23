@@ -22,4 +22,10 @@
     <string name="todos">Todos</string>
     <string name="cuentos">Cuentos</string>
     <string name="tradiciones">Tradiciones</string>
+
+    <string-array name="tipos_archivo">
+
+        <item>Foto</item>
+    </string-array>
+
 </resources>

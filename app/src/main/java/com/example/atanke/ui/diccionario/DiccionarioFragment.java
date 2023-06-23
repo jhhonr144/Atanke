@@ -1,6 +1,9 @@
 package com.example.atanke.ui.diccionario;
 
+import static com.example.atanke.general.utils.ValidarFechas.obtenerFechaActual;
+
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +28,7 @@ import com.example.atanke.general.dto.ConfigDTO;
 import com.example.atanke.general.dto.api.palabras.BDPalabraDTO;
 import com.example.atanke.general.dto.api.palabras.BDPalabraRelacionDTO;
 import com.example.atanke.general.dto.api.palabras.MultimediaDTO;
+import com.example.atanke.general.utils.NetworkUtils;
 import com.example.atanke.general.utils.ValidarFechas;
 import com.example.atanke.lectura.Dao.ConfigGuardarAsyncTask;
 import com.example.atanke.lectura.Dao.GetAllConfigTask;
@@ -64,18 +68,23 @@ public class DiccionarioFragment extends Fragment {
         recicle= binding.recicleGruop;
         ConfigText();
         ConfigBoton();
-        try {
-            cargarConfig();
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        cargarConfig();
         return root;
     }
-
+private void cargarConfig(){
+    boolean isInternetAvailable = NetworkUtils.isNetworkAvailable(requireContext());
+    if (isInternetAvailable) {
+        consultarPalabrasApi(0);
+    } else {
+        try {
+            cargarDatos();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void cargarConfig() throws ExecutionException, InterruptedException {
+    private void cargarConfig__VIEJO() throws ExecutionException, InterruptedException {
         ConfigDao ConfigDao = db.configDao();
         GetAllConfigTask task = new GetAllConfigTask(ConfigDao);
         task.execute();
@@ -159,6 +168,11 @@ public class DiccionarioFragment extends Fragment {
                         Toast.makeText(getContext(),
                                 "No se puede conectar con el servidor, validad tu conecion a internet",
                                 Toast.LENGTH_SHORT).show();
+                        try {
+                            cargarDatos();
+                        } catch (ExecutionException | InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 });
     }
@@ -213,11 +227,13 @@ public class DiccionarioFragment extends Fragment {
         protected Void doInBackground(List<BDPalabraDTO>... palabras ) {
             BDPalabraDao BDPalabraDao = ConfigDataBase.getInstance(getContext()).BDPalabraDao();
             BDPalabraDao.dellAll();
+            BDPalabraDao.dellpm();
             for (BDPalabraDTO palabra : palabras[0]) {
                 palabra.setLetra(palabra.getPalabra().substring(0,1).toUpperCase());
                 BDPalabraDao.insert(palabra);
                 for(MultimediaDTO contenido :palabra.getMultimedia()){
                     BDPalabraDao.insertm(contenido);
+                    BDPalabraDao.insertpm(contenido.getPivot());
                 }
             }
             return null;
