@@ -1,6 +1,8 @@
 package com.example.atanke.palabras.models;
 
-public class palabrasRelacion {
+import java.io.Serializable;
+
+public class palabrasRelacion implements Serializable {
     public String palabra="";
     public String pronunciar="";
     public String palabra1="";
@@ -8,5 +10,6 @@ public class palabrasRelacion {
 
     public  int id=0;
     public  int count=0;
+
 
 }
