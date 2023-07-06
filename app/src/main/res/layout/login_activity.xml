@@ -1,85 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/dp_app_background"
+    android:focusableInTouchMode="true"
+    android:fillViewport="true"
     tools:context=".ui.login.Login">
 
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="889dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:paddingTop="10sp">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_spacing_xxLarge"
             android:contentDescription="@string/logo"
             app:srcCompat="@drawable/atanke"
             tools:ignore="ImageContrastCheck" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_spacing_large"
+            android:textSize="@dimen/dp_font_size_xlarge"
+            android:textStyle="bold" />
+
         <EditText
             android:id="@+id/edtCorreo"
+            style="@style/DPEditText.Normal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:autofillHints=""
             android:ems="10"
             android:hint="@string/usuario"
             android:inputType="textPersonName"
-            android:minHeight="48dp"
-            tools:ignore="TextContrastCheck" />
+            tools:ignore="TextContrastCheck"
+            android:layout_marginTop="@dimen/dp_spacing_large"/>
 
         <EditText
             android:id="@+id/edtContrasena"
+            style="@style/DPEditText.Normal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_spacing_large"
             android:autofillHints=""
-            android:ems="10"
             android:hint="@string/Contrasena"
-            android:inputType="textPassword"
-            android:minHeight="48dp" />
+            android:inputType="textPassword" />
 
         <CheckBox
             android:id="@+id/checkBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/RecordarContrasena" />
+            android:text="@string/RecordarContrasena"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btnIniciar"
+            style="@style/DPButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_spacing_large"
             android:text="@string/iniciarSesion"
             android:textColorLink="#5BEBA6" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:id="@+id/llDoctorLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_spacing_standard_new"
+            android:layout_marginEnd="@dimen/dp_spacing_standard_new"
+            android:layout_marginTop="@dimen/dp_spacing_middle">
 
             <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                style="@style/DPSubHeading"
                 android:text="@string/siAunNoTienes" />
 
             <TextView
                 android:id="@+id/txtRegistrarse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/registreseAqui"
-                android:textColor="@color/teal_700" />
+                style="@style/DPSubHeading"
+                android:layout_marginStart="@dimen/dp_spacing_control_half"
+                android:textColor="@color/teal_700"
+                android:text="@string/registreseAqui" />
         </LinearLayout>
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -2,13 +2,14 @@ package com.example.atanke.sugerirtraduccion.Dao;
 
 import android.os.AsyncTask;
 
+import com.example.atanke.general.Dao.BDPalabraDao;
 import com.example.atanke.general.dto.UsuarioDTO;
 import com.example.atanke.general.Dao.UsuarioDao;
+import com.example.atanke.general.dto.api.palabras.palabraMultiDTO;
 
 import java.util.List;
 
 public class GetAllUsuariosTask extends AsyncTask<Void, Void, List<UsuarioDTO>> {
-
     private UsuarioDao userDao;
 
     public GetAllUsuariosTask(UsuarioDao userDao) {

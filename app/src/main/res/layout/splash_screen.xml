@@ -4,18 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/dp_app_background"
     tools:context=".SplashScreen">
 
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="#FFFFFF"
-        app:lottie_autoPlay="true"
-        app:lottie_rawRes="@raw/intro" />
-
+        android:src="@drawable/atanke" />
 
 </RelativeLayout>
