@@ -31,12 +31,13 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_diccionario,
                 R.id.navigation_lectura,
                 R.id.navigation_traductor,
-
+                R.id.navigation_practica,
                 R.id.navigation_perfil)
                 .build();
         NavController navController = Navigation.findNavController(this,
                 R.id.nav_host_fragment_activity_main);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
 
     }
 

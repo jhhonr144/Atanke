@@ -28,4 +28,9 @@
         android:name="com.example.atanke.ui.perfil.perfil_fragment"
         android:label="@string/perfil"
         tools:layout="@layout/perfil_fragment" />
+
+    <activity
+        android:id="@+id/navigation_practica"
+        android:name="com.unity3d.player.UnityPlayerActivity"
+        android:label="Juego" />
 </navigation>
