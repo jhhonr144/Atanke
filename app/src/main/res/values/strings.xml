@@ -26,6 +26,7 @@
     <string name="seleccionar_idioma">Seleccionar idioma</string>
     <string name="traduccionn">Traduccion</string>
     <string name="palabra">Palabra</string>
+    <string name="palabras">Palabras</string>
     <string name="pronunciaci_n">Pronunciación</string>
     <string name="nuestra_comunidad">Sé parte de nuestra comunidad de traductores</string>
     <string name="title_activity_login">LoginActivity</string>

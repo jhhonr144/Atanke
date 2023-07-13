@@ -1,9 +1,8 @@
 package com.example.atanke.ui.diccionario;
 
-import static com.example.atanke.general.utils.ValidarFechas.obtenerFechaActual;
+import static com.example.atanke.general.utils.DialogBuilderDinamico.detenerAlertaCargando;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,6 +27,7 @@ import com.example.atanke.general.dto.ConfigDTO;
 import com.example.atanke.general.dto.api.palabras.BDPalabraDTO;
 import com.example.atanke.general.dto.api.palabras.BDPalabraRelacionDTO;
 import com.example.atanke.general.dto.api.palabras.MultimediaDTO;
+import com.example.atanke.general.utils.DialogBuilderDinamico;
 import com.example.atanke.general.utils.NetworkUtils;
 import com.example.atanke.general.utils.ValidarFechas;
 import com.example.atanke.lectura.Dao.ConfigGuardarAsyncTask;
@@ -55,6 +55,7 @@ public class DiccionarioFragment extends Fragment {
     private LetrasGruopAdapter itemsRecicle;
     private TextView txt_fechaActualizacion;
     private ConfigDataBase db;
+
     private List<ConfigDTO> config;
     private PalabrasService Servi;
     private PalabrasRelacionService Servi2;
@@ -134,7 +135,7 @@ private void cargarConfig(){
         txt_fechaActualizacion=binding.diccf1TxtFecha;
     } 
     private void consultarPalabrasApi(int cantidadActualPalabras) {
-        //$$MOSTRARCARGANDO$$
+        DialogBuilderDinamico.alertaCargando(getContext(),"¡Casi listo! Cargando información");
         //no hay datos descargado hay qe consultar a la web
         Servi = PalabrasClient.getApiService();
         Servi.getPalabras ( 1,0,1000)
@@ -143,6 +144,7 @@ private void cargarConfig(){
                     public void onResponse(
                             @NonNull Call<PalabrasResponse> call,
                             Response<PalabrasResponse> response) {
+                        detenerAlertaCargando();
                         if (response.body() == null) {
                             Toast.makeText(getContext(), "No se puede consultar las palabras, por favor pruebe despues", Toast.LENGTH_SHORT).show();
                         } else {
@@ -165,6 +167,7 @@ private void cargarConfig(){
                     }
                     @Override
                     public void onFailure(Call<PalabrasResponse> call, Throwable t) {
+                        detenerAlertaCargando();
                         Toast.makeText(getContext(),
                                 "No se puede conectar con el servidor, validad tu conecion a internet",
                                 Toast.LENGTH_SHORT).show();
