@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -75,6 +76,7 @@ public class PalabrasAdapter extends RecyclerView.Adapter<PalabrasAdapter.ViewHo
         public TextView textView4;
         public TextView textView5;
         public Button boton;
+        public ImageView copiar,compartir;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView1 = itemView.findViewById(R.id.diccf2_palabra);
@@ -83,6 +85,8 @@ public class PalabrasAdapter extends RecyclerView.Adapter<PalabrasAdapter.ViewHo
             textView5 = itemView.findViewById(R.id.diccf2_pronuciar2);
             textView3 = itemView.findViewById(R.id.diccf2_contenidon);
             boton = itemView.findViewById(R.id.diccf2_button);
+            copiar = itemView.findViewById(R.id.copy);
+            compartir = itemView.findViewById(R.id.share);
         }
     }
 }
