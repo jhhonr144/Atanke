@@ -22,8 +22,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="120dp"
         android:background="@drawable/background_wave"
-        android:orientation="vertical"
-        android:visibility="visible">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -141,6 +140,7 @@
             android:id="@+id/accion_buscar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             fab:fab_colorNormal="?attr/colorAccent"
             fab:fab_colorPressed="@color/teal_700"
             fab:fab_icon="@drawable/ic_baseline_manage_search_24"

@@ -14,7 +14,7 @@ public class GetPalabrasGroupTask extends AsyncTask<Void, Void, List<letraGruop>
     }
     @Override
     protected List<letraGruop> doInBackground(Void... voids) {
-        return palabras.getGroup();
+        return palabras.getGroupPrueba();
     }
 
 }

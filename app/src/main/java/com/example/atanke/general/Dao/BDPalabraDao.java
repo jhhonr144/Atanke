@@ -48,6 +48,16 @@ public interface BDPalabraDao {
             "GROUP BY p1.letra; ")
     List<letraGruop> getGroup();
 
+    @Query("SELECT COUNT(*) AS cantidad, p1.letra AS letra " +
+            "FROM palabras_r r " +
+            "INNER JOIN palabras p1 ON r.palabra_id_1 = p1.id OR r.palabra_id_2 = p1.id " +
+            "INNER JOIN palabras p2 ON r.palabra_id_1 = p2.id OR r.palabra_id_2 = p2.id " +
+            "WHERE p1.fk_idioma = 1 AND p1.id <> p2.id " +
+            "GROUP BY p1.letra ORDER BY" +
+            "    CASE WHEN p1.letra GLOB '[0-9]*' THEN 1 ELSE 0 END," +
+            "    p1.letra ASC; ")
+    List<letraGruop> getGroupPrueba();
+
     @Query("SELECT * FROM palabras WHERE letra=:letra ORDER BY palabra ASC")
     List<BDPalabraDTO> getPalabra(String letra);
     @Query("SELECT p1.palabra palabra, p2.palabra palabra1 ,p1.id,p1.multilent count,p1.pronunciar,p2.pronunciar pronunciar1 " +

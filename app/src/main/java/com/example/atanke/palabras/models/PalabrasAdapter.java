@@ -1,23 +1,26 @@
 package com.example.atanke.palabras.models;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.atanke.R;
 import com.example.atanke.config.ConfigDataBase;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class PalabrasAdapter extends RecyclerView.Adapter<PalabrasAdapter.ViewHolder> {
     private List<palabrasRelacion> datos;
@@ -37,19 +40,41 @@ public class PalabrasAdapter extends RecyclerView.Adapter<PalabrasAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         // Asignar valores a las vistas del elemento
-        holder.textView1.setText(datos.get(position).palabra);
+        String palabra = datos.get(position).palabra;
+        String primeraLetraMayuscula = TextUtils.isEmpty(palabra) ? "" : palabra.substring(0, 1).toUpperCase() + palabra.substring(1);
+        holder.textView1.setText(primeraLetraMayuscula);
         holder.textView2.setText(datos.get(position).pronunciar);
-        holder.textView4.setText(datos.get(position).palabra1);
+        String traduccion = datos.get(position).palabra1;
+        String primeraLetraMayusculatradu = TextUtils.isEmpty(traduccion) ? "" : traduccion.substring(0, 1).toUpperCase() + traduccion.substring(1);
+        holder.textView4.setText(primeraLetraMayusculatradu);
         holder.textView5.setText(datos.get(position).pronunciar1);
         holder.textView3.setText(datos.get(position).count+"");
-        if(datos.get(position).count==0)
-            holder.boton.setText("Ir a agregar");
+       // if(datos.get(position).count==0)
+       //     holder.boton.setText("Ir a agregar");
         holder.boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cargarInformacionSegundoRecyclerView( v.getContext(),datos.get(position));
             }
         });
+
+        holder.copiar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager clipboardManager = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clipData = ClipData.newPlainText("text", primeraLetraMayusculatradu);
+                clipboardManager.setPrimaryClip(clipData);
+                Toast.makeText(v.getContext().getApplicationContext(), "Traduccion copiada en portapapeles", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        holder.compartir.setOnClickListener(view1 -> {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, primeraLetraMayusculatradu);
+
+            view1.getContext().startActivity(Intent.createChooser(intent, "Compartir traducción"));
+        } );
     }
 
     private void cargarInformacionSegundoRecyclerView(Context context, palabrasRelacion palabrasRelacion) {
@@ -72,6 +97,7 @@ public class PalabrasAdapter extends RecyclerView.Adapter<PalabrasAdapter.ViewHo
         public TextView textView4;
         public TextView textView5;
         public Button boton;
+        public ImageView copiar,compartir;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView1 = itemView.findViewById(R.id.diccf2_palabra);
@@ -80,6 +106,8 @@ public class PalabrasAdapter extends RecyclerView.Adapter<PalabrasAdapter.ViewHo
             textView5 = itemView.findViewById(R.id.diccf2_pronuciar2);
             textView3 = itemView.findViewById(R.id.diccf2_contenidon);
             boton = itemView.findViewById(R.id.diccf2_button);
+            copiar = itemView.findViewById(R.id.copy);
+            compartir = itemView.findViewById(R.id.share);
         }
     }
 }

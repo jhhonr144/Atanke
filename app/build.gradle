@@ -8,12 +8,16 @@ android {
 
     defaultConfig {
         applicationId "com.example.atanke"
-        minSdk 21
+        minSdk 23
         targetSdk 33
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters 'armeabi-v7a'
+        }
     }
 
     buildTypes {
@@ -35,9 +39,13 @@ android {
             extendsFrom annotationProcessor
         }
     }
+    packagingOptions {
+        exclude 'META-INF/**'
+    }
 }
 
 dependencies {
+    implementation project(path: ':unityLibrary')
     compileOnly 'org.projectlombok:lombok:1.18.20'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
 

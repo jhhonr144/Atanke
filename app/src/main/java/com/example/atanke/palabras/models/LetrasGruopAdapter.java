@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.atanke.R;
 import com.example.atanke.config.ConfigDataBase;
 import com.example.atanke.general.Dao.BDPalabraDao;
-import com.example.atanke.general.dto.api.palabras.BDPalabraDTO;
 import com.example.atanke.palabras.Dao.GetPalabrasTask;
 
 import java.util.List;
@@ -41,7 +40,7 @@ public class LetrasGruopAdapter extends RecyclerView.Adapter<LetrasGruopAdapter.
         // Asignar valores a las vistas del elemento
         holder.textView1.setText(datos.get(position).letra);
         holder.textView2.setText(datos.get(position).cantidad+"");
-        holder.textView1.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(holder.recicle.getVisibility()==View.VISIBLE)

@@ -102,7 +102,7 @@ public class TraduccionFragment extends Fragment implements  TextToSpeech.OnInit
             intent.putExtra(Intent.EXTRA_TEXT, editTraduccion.getText().toString());
 
             startActivity(Intent.createChooser(intent, "Compartir traducción"));
-        }  );
+        } );
 
         btnVoz.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -256,8 +256,11 @@ public class TraduccionFragment extends Fragment implements  TextToSpeech.OnInit
         traducirPalabraService.getTraducir(data,fk_idioma).enqueue(new Callback<TraducirPalabraResponse>() {
             @Override
             public void onResponse(@NonNull Call<TraducirPalabraResponse> call, Response<TraducirPalabraResponse> response) {
+                if(response.body() != null){
                 editTraduccion.setText(response.body().getTraduccion());
                 mostrarTextoConColores(response.body().getTraduccion(), editTraduccion);
+                }
+                Log.e("TTS", String.valueOf(response));
             }
 
             @Override
