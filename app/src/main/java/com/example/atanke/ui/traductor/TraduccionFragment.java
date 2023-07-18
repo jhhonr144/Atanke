@@ -102,7 +102,7 @@ public class TraduccionFragment extends Fragment implements  TextToSpeech.OnInit
             intent.putExtra(Intent.EXTRA_TEXT, editTraduccion.getText().toString());
 
             startActivity(Intent.createChooser(intent, "Compartir traducción"));
-        }  );
+        } );
 
         btnVoz.setOnClickListener(new View.OnClickListener() {
             @Override

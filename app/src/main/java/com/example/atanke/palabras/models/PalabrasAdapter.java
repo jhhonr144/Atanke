@@ -1,6 +1,8 @@
 package com.example.atanke.palabras.models;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,6 +57,24 @@ public class PalabrasAdapter extends RecyclerView.Adapter<PalabrasAdapter.ViewHo
                 cargarInformacionSegundoRecyclerView( v.getContext(),datos.get(position));
             }
         });
+
+        holder.copiar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager clipboardManager = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clipData = ClipData.newPlainText("text", primeraLetraMayusculatradu);
+                clipboardManager.setPrimaryClip(clipData);
+                Toast.makeText(v.getContext().getApplicationContext(), "Traduccion copiada en portapapeles", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        holder.compartir.setOnClickListener(view1 -> {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, primeraLetraMayusculatradu);
+
+            view1.getContext().startActivity(Intent.createChooser(intent, "Compartir traducción"));
+        } );
     }
 
     private void cargarInformacionSegundoRecyclerView(Context context, palabrasRelacion palabrasRelacion) {

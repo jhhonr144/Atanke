@@ -1,16 +1,17 @@
 package com.example.atanke.palabras.models;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.atanke.R;
 import com.example.atanke.config.ConfigDataBase;
@@ -31,7 +32,8 @@ public class activity_diccionario_palabra_contenido extends AppCompatActivity {
 
     private List<UsuarioDTO> usuarios;
     private ConfigDataBase db;
-    private TextView txt_palabra,txt_traducion,txt_cantidad;
+    private TextView txt_palabra,txt_traducion,txt_cantidad,txt_pronunciar,txt_sinContenido;
+    private ImageView img_sinContenido;
     private RecyclerView recicle;
     private Button btn_agregar;
     palabrasRelacion objeto;
@@ -75,7 +77,14 @@ public class activity_diccionario_palabra_contenido extends AppCompatActivity {
         txt_palabra.setText(objeto.palabra);
         txt_traducion.setText(objeto.palabra1);
         txt_cantidad.setText(objeto.count+"");
+        txt_pronunciar.setText(objeto.pronunciar1);
+
         //los recicle consultado en bd
+
+        if(objeto.count == 0){
+            txt_sinContenido.setVisibility(View.VISIBLE);
+            img_sinContenido.setVisibility(View.VISIBLE);
+        }
     }
 
     private void buscarinfoBD() {
@@ -85,6 +94,9 @@ public class activity_diccionario_palabra_contenido extends AppCompatActivity {
         txt_palabra=this.findViewById(R.id.txtpalabra);
         txt_traducion=this.findViewById(R.id.txttraducion);
         txt_cantidad=this.findViewById(R.id.txtcantidad);
+        txt_pronunciar=this.findViewById(R.id.pronunciacion);
+        txt_sinContenido=this.findViewById(R.id.textView17);
+        img_sinContenido=this.findViewById(R.id.imageView6);
     }
     private void botones() {
         btn_agregar=this.findViewById(R.id.btnagregar);

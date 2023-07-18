@@ -41,7 +41,6 @@ import com.example.atanke.general.dto.api.sesiones.BDLecturaContenidoDTO;
 import com.example.atanke.general.dto.api.sesiones.BDLecturaSesionDTO;
 import com.example.atanke.general.utils.DialogBuilderDinamico;
 import com.example.atanke.general.utils.NetworkUtils;
-import com.example.atanke.lectura.Dao.GetFotoTask;
 import com.example.atanke.lectura.Dao.GetLecturaSesionFk_lecturaTask;
 import com.example.atanke.lectura.client.LecturaSesionClient;
 import com.example.atanke.lectura.models.ItemLecturaSesionAdapter;
@@ -63,7 +62,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import lombok.SneakyThrows;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -391,7 +389,8 @@ public class lectura_sessiones extends AppCompatActivity implements TextToSpeech
             int inicio = matcher.start();
             int fin = matcher.end();
             int color = Color.parseColor("#145737");
-            spannableString.setSpan(new ForegroundColorSpan(color), inicio, fin, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannableString.setSpan(new ForegroundColorSpan(Color.RED), inicio, fin, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
         }
         pattern = Pattern.compile("<(.*?)>");
         matcher = pattern.matcher(spannableString);
